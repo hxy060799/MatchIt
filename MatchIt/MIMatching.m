@@ -95,7 +95,7 @@
 
 
 +(BOOL)isAbleCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB{
-    if((blockA.x<blockB.x && blockA.y>=blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)!=0){
+    if((blockA.x<blockB.x && blockA.y>=blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)){
         return YES;
     }else{
         return NO;
@@ -111,43 +111,66 @@
         }
         
         //上方
-        int count=0;
-        for(int i=blockA.y;i>blockB.y;i--){
-            //此为判断部分替代品
-            count++;
-            [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-        }
-        for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
-            count=0;
-            for(int i=blockA.x;i<=blockB.x;i++){
+        if(blockA.y<BLOCKS_YCOUNT-1){
+            int count=0;
+            //公共部分
+            for(int i=blockA.y;i>blockB.y;i--){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+            }
+            for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
+                //左右两边
+                count=0;
+                for(int i=blockA.y+1;i<=j;i++){
+                    //此为判断部分替代品
+                    count++;
+                    [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                }
+                //上面
+                count=0;
+                for(int i=blockA.x+1;i<blockB.x;i++){
+                    //此为判断部分替代品
+                    count++;
+                    [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                }
             }
         }
         
         //下方
-        count=0;
-        for(int i=blockA.y-1;i>=blockB.y;i--){
-            //此为判断部分替代品
-            count++;
-            [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-        }
-        for(int j=blockB.y-1;j>=0;j--){
-            count=0;
-            for(int i=blockA.x;i<=blockB.x;i++){
+        if(blockB.y>0){
+            int count=0;
+            for(int i=blockA.y-1;i>=blockB.y;i--){
                 //此为判断部分替代品
                 count++;
-                NSLog(@"i=%i,j=%i",i,j);
-                [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+            }
+            for(int j=blockB.y-1;j>=0;j--){
+                //左右两边
+                count=0;
+                for(int i=blockB.y-1;i>=j;i--){
+                    //此为判断部分替代品
+                    count++;
+                    [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                }
+                //上面
+                count=0;
+                for(int i=blockA.x+1;i<blockB.x;i++){
+                    //此为判断部分替代品
+                    count++;
+                    NSLog(@"i=%i,j=%i",i,j);
+                    [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                }
             }
         }
         
         return YES;
-    }else{
-        return NO;
+        }else{
+            return NO;
+        }
+        
     }
-
-}
-
-@end
+    
+    @end

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		A9173E9E16986E2A009F4045 /* CCLayerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = A9173E9D16986E2A009F4045 /* CCLayerTouch.m */; };
 		A9183D3E1691C88900828799 /* MIPositionConvert.c in Sources */ = {isa = PBXBuildFile; fileRef = A9183D3D1691C88900828799 /* MIPositionConvert.c */; };
-		A9183D781691CDD200828799 /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9183D761691CDD200828799 /* BasicImage.plist */; };
-		A9183D791691CDD200828799 /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A9183D771691CDD200828799 /* BasicImage.png */; };
 		A92336FB16A19EF4008DD535 /* MIMatching.m in Sources */ = {isa = PBXBuildFile; fileRef = A92336FA16A19EF4008DD535 /* MIMatching.m */; };
 		A93C3E841674529400955124 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93C3E831674529400955124 /* QuartzCore.framework */; };
 		A93C3E861674529400955124 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93C3E851674529400955124 /* OpenGLES.framework */; };
@@ -134,6 +132,8 @@
 		A93C40051674529700955124 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A93C40041674529700955124 /* main.m */; };
 		A93C40081674529700955124 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A93C40071674529700955124 /* AppDelegate.m */; };
 		A93C40131674537200955124 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A93C40121674537200955124 /* GameLayer.m */; };
+		A94EC9DB16A281EF00DE24C4 /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A94EC9D916A281EF00DE24C4 /* BasicImage.plist */; };
+		A94EC9DC16A281EF00DE24C4 /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A94EC9DA16A281EF00DE24C4 /* BasicImage.png */; };
 		A994648D16908A8C001321E8 /* MIBlockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A994648C16908A8C001321E8 /* MIBlockManager.m */; };
 		A99AC6001690861A0085CC16 /* MIBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A99AC5FF1690861A0085CC16 /* MIBlock.m */; };
 /* End PBXBuildFile section */
@@ -144,8 +144,6 @@
 		A9173EA116986E5A009F4045 /* CCLayerTouchDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLayerTouchDelegate.h; sourceTree = "<group>"; };
 		A9183D3B1691C87E00828799 /* MIPositionConvert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIPositionConvert.h; sourceTree = "<group>"; };
 		A9183D3D1691C88900828799 /* MIPositionConvert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MIPositionConvert.c; sourceTree = "<group>"; };
-		A9183D761691CDD200828799 /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
-		A9183D771691CDD200828799 /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
 		A9183D7A1691D07800828799 /* MIConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIConfig.h; sourceTree = "<group>"; };
 		A92336F916A19EF4008DD535 /* MIMatching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMatching.h; sourceTree = "<group>"; };
 		A92336FA16A19EF4008DD535 /* MIMatching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMatching.m; sourceTree = "<group>"; };
@@ -407,6 +405,8 @@
 		A93C40071674529700955124 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A93C40111674537200955124 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
 		A93C40121674537200955124 /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLayer.m; sourceTree = "<group>"; };
+		A94EC9D916A281EF00DE24C4 /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
+		A94EC9DA16A281EF00DE24C4 /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
 		A994648B16908A8C001321E8 /* MIBlockManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlockManager.h; sourceTree = "<group>"; };
 		A994648C16908A8C001321E8 /* MIBlockManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIBlockManager.m; sourceTree = "<group>"; };
 		A99AC5FE1690861A0085CC16 /* MIBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlock.h; sourceTree = "<group>"; };
@@ -495,8 +495,8 @@
 		A93C3E961674529400955124 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A9183D761691CDD200828799 /* BasicImage.plist */,
-				A9183D771691CDD200828799 /* BasicImage.png */,
+				A94EC9D916A281EF00DE24C4 /* BasicImage.plist */,
+				A94EC9DA16A281EF00DE24C4 /* BasicImage.png */,
 				A93C3E971674529400955124 /* Default.png */,
 				A93C3E991674529400955124 /* fps_images.png */,
 				A93C3E9B1674529400955124 /* fps_images-hd.png */,
@@ -933,8 +933,8 @@
 				A93C3EAA1674529400955124 /* Icon@2x.png in Resources */,
 				A93C3EAD1674529400955124 /* iTunesArtwork in Resources */,
 				A93C3FE61674529700955124 /* ChangeLog in Resources */,
-				A9183D781691CDD200828799 /* BasicImage.plist in Resources */,
-				A9183D791691CDD200828799 /* BasicImage.png in Resources */,
+				A94EC9DB16A281EF00DE24C4 /* BasicImage.plist in Resources */,
+				A94EC9DC16A281EF00DE24C4 /* BasicImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,6 +46,7 @@ CCLabelTTF *welcomeLabel;
         CCLOG(@"非常棒,一共四种方案,前两种已经完成了,离成功已经不远了!");
         //2013.01.13
         CCLOG(@"加油啊!就差一种情况了!");
+        CCLOG(@"很棒,已经把之前的大漏洞修复好了,接下来要更加努力哦!");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         
