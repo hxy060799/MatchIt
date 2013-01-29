@@ -176,6 +176,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     [super dealloc];
 }
 
+-(NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
+{
+    return [bundle_ pathForResource:resource
+                             ofType:ext
+                        inDirectory:subpath];
+}
+
 -(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
 {
 	NSString *newName = path;
@@ -204,7 +211,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			newName = [pathWithoutExtension stringByAppendingString:suffix];
 			newName = [newName stringByAppendingPathExtension:extension];
 		} else
-			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
+			CCLOGWARN(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
 	}
 
 	NSString *ret = nil;
@@ -215,7 +222,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
 		
 		// If the file does not exist it will return nil.
-		ret = [bundle_ pathForResource:[newName lastPathComponent]
+		ret = [self pathForResource:[newName lastPathComponent]
 												   ofType:nil
 											  inDirectory:imageDirectory];
 	}
@@ -279,7 +286,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #endif // __CC_PLATFORM_MAC
 	
 	if( ! ret ) {
-		CCLOG(@"cocos2d: Warning: File not found: %@", relPath);
+		CCLOGWARN(@"cocos2d: Warning: File not found: %@", relPath);
 		ret = relPath;
 	}
 		

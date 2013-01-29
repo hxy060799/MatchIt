@@ -2,14 +2,14 @@
 //  AppDelegate.m
 //  MatchIt
 //
-//  Created by Bill on 12-12-9.
-//  Copyright __MyCompanyName__ 2012年. All rights reserved.
+//  Created by Bill on 13-1-29.
+//  Copyright __MyCompanyName__ 2013年. All rights reserved.
 //
 
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "GameLayer.h"
+#import "IntroLayer.h"
 
 @implementation AppController
 
@@ -54,17 +54,6 @@
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 
-	// Create a Navigation Controller with the Director
-	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
-	navController_.navigationBarHidden = YES;
-
-	// set the Navigation Controller as the root view controller
-//	[window_ setRootViewController:rootViewController_];
-	[window_ addSubview:navController_.view];
-
-	// make main window visible
-	[window_ makeKeyAndVisible];
-
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -84,8 +73,20 @@
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-	[director_ pushScene: [GameLayer scene]]; 
+	[director_ pushScene: [IntroLayer scene]]; 
 
+	
+	// Create a Navigation Controller with the Director
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+//	[window_ addSubview:navController_.view];	// Generates flicker.
+	[window_ setRootViewController:navController_];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];
+	
 	return YES;
 }
 
@@ -148,3 +149,4 @@
 	[super dealloc];
 }
 @end
+

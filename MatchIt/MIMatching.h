@@ -14,13 +14,12 @@
 
 @interface MIMatching : NSObject
 
-+(BOOL)isAbleAWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB;
-+(BOOL)isMatchingAWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
++(BOOL)isMatchingAWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager;
 
-+(BOOL)isAbleBWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB;
 +(BOOL)isMatchingBWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
 
-+(BOOL)isAbleCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB;
 +(BOOL)isMatchingCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
+
++(BOOL)isMatchingDWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
 
 @end

@@ -1,9 +1,9 @@
 //
-//  GameLayer.h
+//  HelloWorldLayer.h
 //  MatchIt
 //
-//  Created by Bill on 12-12-9.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by Bill on 13-1-29.
+//  Copyright __MyCompanyName__ 2013年. All rights reserved.
 //
 
 #import "cocos2d.h"

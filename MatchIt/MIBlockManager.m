@@ -54,6 +54,7 @@
             struct MIPosition blockPosition=MIIndexToPositon(i);
             
             [aBlock setBlockSpriteFrameWithFileName:@"Block_Red.png"];
+            //[aBlock setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",blockPosition.y]];
             
             aBlock.blockSprite.anchorPoint=ccp(0,0);
             aBlock.blockSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
@@ -77,6 +78,10 @@
 
 -(MIBlock*)blockAtX:(int)x Y:(int)y{
     return [self blockAtIndex:MIPositionToIndex(x, y)];
+}
+
+-(MIBlock*)blockAtPosition:(struct MIPosition)position{
+    return [self blockAtIndex:MIPositionToIndex(position.x, position.y)];
 }
 
 #pragma mark - Memory Management
@@ -116,7 +121,7 @@
         if([selectedBlocks count]==2){
             struct MIPosition blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
             struct MIPosition blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
-            NSLog(@"%i",[MIMatching isMatchingCWithA:blockA B:blockB Manager:self]);
+            NSLog(@"%i",[MIMatching isMatchingAWithA:blockA B:blockB Manager:self]);
         }
     }else{
         [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];

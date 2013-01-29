@@ -290,6 +290,21 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCSequence (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions
+{
+	return [self actionWithArray:actions];
+}
+@end
+
+@implementation CCSpawn (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions
+{
+	return [self actionWithArray:actions];
+}
+@end
 
 @implementation CCRenderTexture (Deprecated)
 -(BOOL)saveBuffer:(NSString*)name
@@ -353,7 +368,8 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @implementation CCSpriteFrameCache (Deprecated)
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename
 {
-	[self addSpriteFramesWithDictionary:dictionary textureFilename:filename];
+	NSAssert(NO, @"unimplemented. Use addSpriteFramesWithFile:textureFile: instead");
+//	[self addSpriteFramesWithDictionary:dictionary textureFilename:filename];
 }
 
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)filename
@@ -384,11 +400,11 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @implementation CCTexture2D (Deprecated)
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return  [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:lineBreakMode fontName:name fontSize:size];
+	return  [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:lineBreakMode fontName:name fontSize:size];
 }
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop fontName:name fontSize:size];
+	return [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop fontName:name fontSize:size];
 }
 @end
 

@@ -1,9 +1,9 @@
 //
-//  GameLayer.m
+//  HelloWorldLayer.m
 //  MatchIt
 //
-//  Created by Bill on 12-12-9.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by Bill on 13-1-29.
+//  Copyright __MyCompanyName__ 2013年. All rights reserved.
 //
 
 #import "GameLayer.h"
@@ -15,10 +15,17 @@
 CCLabelTTF *welcomeLabel;
 
 +(CCScene*)scene{
-    CCScene *scene=[CCScene node];
-    GameLayer *layer=[GameLayer node];
-    [scene addChild:layer];
-    return scene;
+	// 'scene' is an autorelease object.
+	CCScene *scene = [CCScene node];
+	
+	// 'layer' is an autorelease object.
+	GameLayer *layer = [GameLayer node];
+	
+	// add layer as a child to scene
+	[scene addChild: layer];
+	
+	// return the scene
+	return scene;
 }
 
 -(id)init{
@@ -47,8 +54,11 @@ CCLabelTTF *welcomeLabel;
         //2013.01.13
         CCLOG(@"加油啊!就差一种情况了!");
         CCLOG(@"很棒,已经把之前的大漏洞修复好了,接下来要更加努力哦!");
+        //2013.01.29
+        CCLOG(@"很好,经提早把基础算法部分弄好了,可以开始做坐标转换了.");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
+        NSLog(@"%f:%f",winSize.width,winSize.height);
         
         CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"妹妹,我会努力的!" fontName:@"Marker Felt" fontSize:32];
         helloWorldLabel.position=ccp(winSize.width/2,winSize.height/2);

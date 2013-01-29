@@ -1,8 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2012 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,75 +20,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
+#import "CCNode.h"
 
-#import "ccMacros.h"
-#import "CCParticleSystemQuad.h"
+#ifdef DEBUG
 
-//! A fire particle system
-@interface CCParticleFire: CCParticleSystemQuad
-{
-}
+/** Debugging extensions of CCNode.
+ They are available when the DEBUG macro is defined at compile time
+ */
+@interface CCNode (Debug)
+
+/** prints on the debug console the scene graph */
+-(void) walkSceneGraph:(NSUInteger)level;
+
 @end
 
-//! A fireworks particle system
-@interface CCParticleFireworks : CCParticleSystemQuad
-{
-}
-@end
-
-//! A sun particle system
-@interface CCParticleSun : CCParticleSystemQuad
-{
-}
-@end
-
-//! A galaxy particle system
-@interface CCParticleGalaxy : CCParticleSystemQuad
-{
-}
-@end
-
-//! A flower particle system
-@interface CCParticleFlower : CCParticleSystemQuad
-{
-}
-@end
-
-//! A meteor particle system
-@interface CCParticleMeteor : CCParticleSystemQuad
-{
-}
-@end
-
-//! An spiral particle system
-@interface CCParticleSpiral : CCParticleSystemQuad
-{
-}
-@end
-
-//! An explosion particle system
-@interface CCParticleExplosion : CCParticleSystemQuad
-{
-}
-@end
-
-//! An smoke particle system
-@interface CCParticleSmoke : CCParticleSystemQuad
-{
-}
-@end
-
-//! An snow particle system
-@interface CCParticleSnow : CCParticleSystemQuad
-{
-}
-@end
-
-//! A rain particle system
-@interface CCParticleRain : CCParticleSystemQuad
-{
-}
-@end
+#endif // DEBUG

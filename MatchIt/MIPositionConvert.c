@@ -21,7 +21,6 @@ struct MIPosition MIPositionMake(int x,int y){
     return position;
 }
 
-
 int MIPositionToIndex(int x,int y){
     return y*BLOCKS_XCOUNT+x;
 }
@@ -52,4 +51,12 @@ int MIBlockISInArea(int x,int y){
         return 0;
     }
     return 1;
+}
+
+struct MIPosition MIConvertWithPositionConvert(struct MIPosition position,MIPositionConvert positionConvert){
+    if(positionConvert==MIPositionConvertNone){
+        return position;
+    }else{
+        return MIPositionMake(0, 0);
+    }
 }
