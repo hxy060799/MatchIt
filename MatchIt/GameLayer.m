@@ -60,7 +60,8 @@ CCLabelTTF *welcomeLabel;
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         NSLog(@"%f:%f",winSize.width,winSize.height);
         
-        CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"妹妹,我会努力的!" fontName:@"Marker Felt" fontSize:32];
+        //CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"妹妹,我会努力的!" fontName:@"Marker Felt" fontSize:32];
+        CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
         helloWorldLabel.position=ccp(winSize.width/2,winSize.height/2);
         [self addChild:helloWorldLabel z:1];
         
