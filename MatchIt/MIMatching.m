@@ -140,7 +140,7 @@
             for(int j=blockB.y-1;j>=0;j--){
                 //左右两边
                 count=0;
-                for(int i=blockB.y-1;i>=j;i--){
+                for(int i=j;i<=blockB.y-1;i++){
                     //此为判断部分替代品
                     count++;
                     [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
@@ -169,7 +169,7 @@
             for(int j=blockA.x-1;j>=0;j--){
                 //上下两边
                 count=0;
-                for(int i=blockA.x-1;i>=j;i--){
+                for(int i=j;i<=blockA.x-1;i++){
                     //此为判断部分替代品
                     count++;
                     [[manager blockAtX:i Y:blockB.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
