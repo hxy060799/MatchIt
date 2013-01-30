@@ -11,12 +11,6 @@
 #ifndef MatchIt_MIPositionConvert_h
 #define MatchIt_MIPositionConvert_h
 
-typedef enum {
-    MIPositionConvertNone=0,
-    MIPositionConvertFlipToLeft=1,
-    MIPositionConvertFlipToRight=1
-}MIPositionConvert;
-
 struct MIPosition{
     int x;
     int y;
@@ -30,7 +24,5 @@ struct MIPosition MIIndexToPositon(int i);
 struct MIPosition MIScreenToPosition(float x,float y);
 
 int MIBlockISInArea(int x,int y);
-
-struct MIPosition MIConvertWithPositionConvert(struct MIPosition position,MIPositionConvert positionConvert);
 
 #endif

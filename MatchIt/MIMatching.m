@@ -15,6 +15,7 @@
 +(BOOL)isMatchingAWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager{
     //第一种直线方案不进行坐标转换,直接把另外一种方案放到里面.
     if(blockA.y==blockB.y){
+        //横着
         if(blockA.x>blockB.x){
             struct MIPosition positionTemp=blockB;
             blockB=blockA;
@@ -29,6 +30,7 @@
         }
         return YES;
     }else if(blockA.x==blockB.x){
+        //竖着
         if(blockA.y>blockB.y){
             struct MIPosition positionTemp=blockB;
             blockB=blockA;
@@ -49,6 +51,7 @@
 
 +(BOOL)isMatchingBWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager{
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)){
+        //方块A在左上
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             struct MIPosition positionTemp=blockB;
             blockB=blockA;
@@ -57,7 +60,7 @@
         
         //先右后下
         int count=0;
-        for(int i=blockA.x+1;i<blockB.x+1;i++){
+        for(int i=blockA.x+1;i<=blockB.x;i++){
             //此为判断部分替代品
             count++;
             [[manager blockAtX:i Y:blockA.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
@@ -71,7 +74,7 @@
         
         //先下后右
         count=0;
-        for(int i=blockA.y-1;i>blockB.y-1;i--){
+        for(int i=blockA.y-1;i>=blockB.y;i--){
             //此为判断部分替代品
             count++;
             [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
@@ -206,6 +209,7 @@
                 count++;
                 [[manager blockAtX:j Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
             }
+            //右段
             count=0;
             for(int j=i;j>blockB.y;j--){
                 count++;

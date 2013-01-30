@@ -52,11 +52,3 @@ int MIBlockISInArea(int x,int y){
     }
     return 1;
 }
-
-struct MIPosition MIConvertWithPositionConvert(struct MIPosition position,MIPositionConvert positionConvert){
-    if(positionConvert==MIPositionConvertNone){
-        return position;
-    }else{
-        return MIPositionMake(0, 0);
-    }
-}

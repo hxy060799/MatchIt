@@ -121,7 +121,7 @@
         if([selectedBlocks count]==2){
             struct MIPosition blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
             struct MIPosition blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
-            NSLog(@"%i",[MIMatching isMatchingAWithA:blockA B:blockB Manager:self]);
+            NSLog(@"%i",[MIMatching isMatchingCWithA:blockA B:blockB Manager:self]);
         }
     }else{
         [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
