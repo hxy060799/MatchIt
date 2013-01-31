@@ -56,12 +56,14 @@ CCLabelTTF *welcomeLabel;
         CCLOG(@"很棒,已经把之前的大漏洞修复好了,接下来要更加努力哦!");
         //2013.01.29
         CCLOG(@"很好,经提早把基础算法部分弄好了,可以开始做坐标转换了.");
+        //2013.01.31
+        CCLOG(@"昨天做了一个尝试,今天已经找到相对较好的方法了.今天返校,起床太早,犯困想睡觉了.明天继续!");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         NSLog(@"%f:%f",winSize.width,winSize.height);
         
-        //CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"妹妹,我会努力的!" fontName:@"Marker Felt" fontSize:32];
-        CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
+        CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"妹妹,我会努力的!" fontName:@"Marker Felt" fontSize:32];
+        //CCLabelTTF *helloWorldLabel=[CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:32];
         helloWorldLabel.position=ccp(winSize.width/2,winSize.height/2);
         [self addChild:helloWorldLabel z:1];
         

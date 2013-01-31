@@ -25,4 +25,6 @@ struct MIPosition MIScreenToPosition(float x,float y);
 
 int MIBlockISInArea(int x,int y);
 
+struct MIPosition MIHorizontalFlip(struct MIPosition position);
+
 #endif

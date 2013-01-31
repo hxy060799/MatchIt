@@ -52,3 +52,7 @@ int MIBlockISInArea(int x,int y){
     }
     return 1;
 }
+
+struct MIPosition MIHorizontalFlip(struct MIPosition position){
+    return MIPositionMake(-position.x+BLOCKS_XCOUNT-1, position.y);
+}
