@@ -107,9 +107,23 @@
     }
 }
 
-#warning 下面部分尚未修改
-
 +(BOOL)isMatchingCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager{
+    if([self isMatchingCWithA:blockA B:blockB Manager:manager HorizontalFlip:NO]){
+        return YES;
+    }else if([self isMatchingCWithA:blockA B:blockB Manager:manager HorizontalFlip:YES]){
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+
++(BOOL)isMatchingCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip{
+    if(flip==YES){
+        blockA=MIHorizontalFlip(blockA);
+        blockB=MIHorizontalFlip(blockB);
+    }
+    
     if((blockA.x<blockB.x && blockA.y>=blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)){
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             struct MIPosition positionTemp=blockB;
@@ -124,7 +138,7 @@
             for(int i=blockA.y;i>blockB.y;i--){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(blockB.x, i) Manager:manager HorizontalFlip:flip];
             }
             for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
                 //左右两边
@@ -132,15 +146,15 @@
                 for(int i=blockA.y+1;i<=j;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-                    [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(blockA.x, i) Manager:manager HorizontalFlip:flip];
+                    [self markBlockWithNumber:count position:MIPositionMake(blockB.x, i) Manager:manager HorizontalFlip:flip];
                 }
                 //上面
                 count=0;
                 for(int i=blockA.x+1;i<blockB.x;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, j) Manager:manager HorizontalFlip:flip];
                 }
             }
         }
@@ -152,7 +166,7 @@
             for(int i=blockA.y-1;i>=blockB.y;i--){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(blockA.x, i) Manager:manager HorizontalFlip:flip];
             }
             for(int j=blockB.y-1;j>=0;j--){
                 //左右两边
@@ -160,15 +174,15 @@
                 for(int i=j;i<=blockB.y-1;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:blockA.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-                    [[manager blockAtX:blockB.x Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(blockA.x, i) Manager:manager HorizontalFlip:flip];
+                    [self markBlockWithNumber:count position:MIPositionMake(blockB.x, i) Manager:manager HorizontalFlip:flip];
                 }
                 //下面
                 count=0;
                 for(int i=blockA.x+1;i<blockB.x;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, j) Manager:manager HorizontalFlip:flip];
                 }
             }
         }
@@ -180,7 +194,7 @@
             for(int i=blockA.x;i<blockB.x;i++){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:i Y:blockB.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(i, blockB.y) Manager:manager HorizontalFlip:flip];
             }
             
             for(int j=blockA.x-1;j>=0;j--){
@@ -189,8 +203,8 @@
                 for(int i=j;i<=blockA.x-1;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:i Y:blockB.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-                    [[manager blockAtX:i Y:blockA.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, blockA.y) Manager:manager HorizontalFlip:flip];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, blockB.y) Manager:manager HorizontalFlip:flip];
                 }
                 
                 //左面
@@ -198,7 +212,7 @@
                 for(int i=blockA.y-1;i>blockB.y;i--){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:j Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(j, i) Manager:manager HorizontalFlip:flip];
                 }
                 
             }
@@ -212,7 +226,7 @@
             for(int i=blockA.x+1;i<=blockB.x;i++){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:i Y:blockA.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(i, blockA.y) Manager:manager HorizontalFlip:flip];
             }
             
             for(int j=blockB.x+1;j<BLOCKS_XCOUNT;j++){
@@ -221,8 +235,8 @@
                 for(int i=blockB.x+1;i<=j;i++){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:i Y:blockB.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
-                    [[manager blockAtX:i Y:blockA.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, blockA.y) Manager:manager HorizontalFlip:flip];
+                    [self markBlockWithNumber:count position:MIPositionMake(i, blockB.y) Manager:manager HorizontalFlip:flip];
                 }
                 
                 //右面
@@ -230,11 +244,10 @@
                 for(int i=blockA.y-1;i>blockB.y;i--){
                     //此为判断部分替代品
                     count++;
-                    [[manager blockAtX:j Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                    [self markBlockWithNumber:count position:MIPositionMake(j, i) Manager:manager HorizontalFlip:flip];
                 }
                 
             }
-             
             
         }
         return YES;
@@ -244,8 +257,24 @@
     
 }
 
+
 +(BOOL)isMatchingDWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager{
-    if((blockA.x<blockB.x && blockA.y>=blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)||(abs(blockA.y-blockB.y)>1)){
+    if([self isMatchingDWithA:blockA B:blockB Manager:manager HorizontalFlip:NO]){
+        return YES;
+    }else if([self isMatchingDWithA:blockA B:blockB Manager:manager HorizontalFlip:YES]){
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
++(BOOL)isMatchingDWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip{
+    if(flip==YES){
+        blockA=MIHorizontalFlip(blockA);
+        blockB=MIHorizontalFlip(blockB);
+    }
+    
+    if(((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y))&&(abs(blockA.y-blockB.y)>1)){
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             struct MIPosition positionTemp=blockB;
             blockB=blockA;
@@ -258,21 +287,22 @@
             for(int j=blockA.x+1;j<=i;j++){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:j Y:blockA.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(j, blockA.y) Manager:manager HorizontalFlip:flip];
             }
             count=0;
+            
             //中间
             for(int j=blockA.y-1;j>blockB.y;j--){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:i Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(i, j) Manager:manager HorizontalFlip:flip];
             }
             count=0;
             //下段
             for(int j=i;j<blockB.x;j++){
                 //此为判断部分替代品
                 count++;
-                [[manager blockAtX:j Y:blockB.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(j, blockB.y) Manager:manager HorizontalFlip:flip];
             }
         }
         
@@ -281,21 +311,22 @@
             //左段
             for(int j=blockA.y-1;j>=i;j--){
                 count++;
-                [[manager blockAtX:blockA.x Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(blockA.x, j) Manager:manager HorizontalFlip:flip];
             }
             count=0;
             //中间
             for(int j=blockA.x+1;j<blockB.x;j++){
                 count++;
-                [[manager blockAtX:j Y:i]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(j, i) Manager:manager HorizontalFlip:flip];
             }
             //右段
             count=0;
             for(int j=i;j>blockB.y;j--){
                 count++;
-                [[manager blockAtX:blockB.x Y:j]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",count]];
+                [self markBlockWithNumber:count position:MIPositionMake(blockB.x, j) Manager:manager HorizontalFlip:flip];
             }
         }
+        
         return YES;
     }else{
         return NO;
