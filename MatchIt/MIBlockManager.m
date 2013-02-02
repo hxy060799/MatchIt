@@ -118,11 +118,13 @@
         [block setBlockSpriteFrameWithFileName:@"Block_Blue.png"];
         [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
         
+        /*
         if([selectedBlocks count]==2){
             struct MIPosition blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
             struct MIPosition blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
             NSLog(@"%i",[MIMatching isMatchingDWithA:blockA B:blockB Manager:self]);
         }
+        */
     }else{
         [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
         for(int i=0;i<[selectedBlocks count];i++){
