@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04F24D4316BCAA89004C20F7 /* MIRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F24D4216BCAA89004C20F7 /* MIRoute.m */; };
+		A903E7E116BE7DAF00FB341A /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A903E7DF16BE7DAF00FB341A /* BasicImage.plist */; };
+		A903E7E216BE7DAF00FB341A /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A903E7E016BE7DAF00FB341A /* BasicImage.png */; };
+		A93A6FB516BCC3AA008B0ED1 /* MIMatching.m in Sources */ = {isa = PBXBuildFile; fileRef = A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */; };
+		A93A6FB916BCC3B0008B0ED1 /* MIRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = A93A6FB816BCC3B0008B0ED1 /* MIRoute.m */; };
 		A95EA83216B74DD000AB38E9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95EA83116B74DD000AB38E9 /* QuartzCore.framework */; };
 		A95EA83416B74DD000AB38E9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95EA83316B74DD000AB38E9 /* OpenGLES.framework */; };
 		A95EA83616B74DD000AB38E9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95EA83516B74DD000AB38E9 /* OpenAL.framework */; };
@@ -135,17 +138,21 @@
 		A95EA9C016B74DD100AB38E9 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EA9BF16B74DD100AB38E9 /* GameLayer.m */; };
 		A95EA9C316B74DD100AB38E9 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EA9C216B74DD100AB38E9 /* IntroLayer.m */; };
 		A95EAB5F16B74F4D00AB38E9 /* CCLayerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EAB5D16B74F4D00AB38E9 /* CCLayerTouch.m */; };
-		A95EAB6F16B74FB000AB38E9 /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A95EAB6D16B74FB000AB38E9 /* BasicImage.plist */; };
-		A95EAB7016B74FB000AB38E9 /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A95EAB6E16B74FB000AB38E9 /* BasicImage.png */; };
-		A9C167C716BBD0A3000EAC36 /* MIMatching.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C167C616BBD0A3000EAC36 /* MIMatching.m */; };
+		A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */; };
 		A9EF455C16B7D98D0037631A /* MIBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455216B7D98D0037631A /* MIBlock.m */; };
 		A9EF455D16B7D98D0037631A /* MIBlockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455516B7D98D0037631A /* MIBlockManager.m */; };
-		A9EF456216B7D9C80037631A /* MIPositionConvert.c in Sources */ = {isa = PBXBuildFile; fileRef = A9EF456116B7D9C80037631A /* MIPositionConvert.c */; };
+		A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBAED416BDF87600F1C541 /* MIMap.m */; };
+		A9FBAED816BDFB2100F1C541 /* MatchItMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */; };
+		A9FBAEDA16BDFEBD00F1C541 /* BlockInformation.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04F24D4116BCAA89004C20F7 /* MIRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIRoute.h; sourceTree = "<group>"; };
-		04F24D4216BCAA89004C20F7 /* MIRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIRoute.m; sourceTree = "<group>"; };
+		A903E7DF16BE7DAF00FB341A /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
+		A903E7E016BE7DAF00FB341A /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
+		A93A6FB316BCC3AA008B0ED1 /* MIMatching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMatching.h; sourceTree = "<group>"; };
+		A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMatching.m; sourceTree = "<group>"; };
+		A93A6FB716BCC3B0008B0ED1 /* MIRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIRoute.h; sourceTree = "<group>"; };
+		A93A6FB816BCC3B0008B0ED1 /* MIRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIRoute.m; sourceTree = "<group>"; };
 		A95EA82D16B74DD000AB38E9 /* MatchIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95EA83116B74DD000AB38E9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A95EA83316B74DD000AB38E9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -411,10 +418,8 @@
 		A95EAB5C16B74F4D00AB38E9 /* CCLayerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerTouch.h; sourceTree = "<group>"; };
 		A95EAB5D16B74F4D00AB38E9 /* CCLayerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayerTouch.m; sourceTree = "<group>"; };
 		A95EAB5E16B74F4D00AB38E9 /* CCLayerTouchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerTouchDelegate.h; sourceTree = "<group>"; };
-		A95EAB6D16B74FB000AB38E9 /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
-		A95EAB6E16B74FB000AB38E9 /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
-		A9C167C516BBD0A3000EAC36 /* MIMatching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMatching.h; sourceTree = "<group>"; };
-		A9C167C616BBD0A3000EAC36 /* MIMatching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMatching.m; sourceTree = "<group>"; };
+		A9B9CB9F16BCC5630038ECA1 /* MIPositionConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIPositionConvert.h; sourceTree = "<group>"; };
+		A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIPositionConvert.m; sourceTree = "<group>"; };
 		A9EF455116B7D98D0037631A /* MIBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlock.h; sourceTree = "<group>"; };
 		A9EF455216B7D98D0037631A /* MIBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIBlock.m; sourceTree = "<group>"; };
 		A9EF455316B7D98D0037631A /* MIBlockDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlockDelegate.h; sourceTree = "<group>"; };
@@ -422,8 +427,10 @@
 		A9EF455516B7D98D0037631A /* MIBlockManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIBlockManager.m; sourceTree = "<group>"; };
 		A9EF455616B7D98D0037631A /* MIBlockManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlockManagerDelegate.h; sourceTree = "<group>"; };
 		A9EF455716B7D98D0037631A /* MIConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIConfig.h; sourceTree = "<group>"; };
-		A9EF456016B7D9C80037631A /* MIPositionConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIPositionConvert.h; sourceTree = "<group>"; };
-		A9EF456116B7D9C80037631A /* MIPositionConvert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MIPositionConvert.c; sourceTree = "<group>"; };
+		A9FBAED316BDF87600F1C541 /* MIMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMap.h; sourceTree = "<group>"; };
+		A9FBAED416BDF87600F1C541 /* MIMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMap.m; sourceTree = "<group>"; };
+		A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MatchItMap.plist; sourceTree = "<group>"; };
+		A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlockInformation.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,8 +507,10 @@
 		A95EA84416B74DD000AB38E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A95EAB6D16B74FB000AB38E9 /* BasicImage.plist */,
-				A95EAB6E16B74FB000AB38E9 /* BasicImage.png */,
+				A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */,
+				A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */,
+				A903E7DF16BE7DAF00FB341A /* BasicImage.plist */,
+				A903E7E016BE7DAF00FB341A /* BasicImage.png */,
 				A95EA84516B74DD000AB38E9 /* Default.png */,
 				A95EA84716B74DD000AB38E9 /* Default-Landscape~ipad.png */,
 				A95EA84916B74DD000AB38E9 /* fps_images.png */,
@@ -875,8 +884,8 @@
 		A9EF455016B7D9830037631A /* MIKit */ = {
 			isa = PBXGroup;
 			children = (
-				A9EF456016B7D9C80037631A /* MIPositionConvert.h */,
-				A9EF456116B7D9C80037631A /* MIPositionConvert.c */,
+				A9B9CB9F16BCC5630038ECA1 /* MIPositionConvert.h */,
+				A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */,
 				A9EF455116B7D98D0037631A /* MIBlock.h */,
 				A9EF455216B7D98D0037631A /* MIBlock.m */,
 				A9EF455316B7D98D0037631A /* MIBlockDelegate.h */,
@@ -884,15 +893,12 @@
 				A9EF455516B7D98D0037631A /* MIBlockManager.m */,
 				A9EF455616B7D98D0037631A /* MIBlockManagerDelegate.h */,
 				A9EF455716B7D98D0037631A /* MIConfig.h */,
-<<<<<<< HEAD
-				A9EF455816B7D98D0037631A /* MIMatching.h */,
-				A9EF455916B7D98D0037631A /* MIMatching.m */,
-				04F24D4116BCAA89004C20F7 /* MIRoute.h */,
-				04F24D4216BCAA89004C20F7 /* MIRoute.m */,
-=======
-				A9C167C516BBD0A3000EAC36 /* MIMatching.h */,
-				A9C167C616BBD0A3000EAC36 /* MIMatching.m */,
->>>>>>> 小的修改
+				A9FBAED316BDF87600F1C541 /* MIMap.h */,
+				A9FBAED416BDF87600F1C541 /* MIMap.m */,
+				A93A6FB316BCC3AA008B0ED1 /* MIMatching.h */,
+				A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */,
+				A93A6FB716BCC3B0008B0ED1 /* MIRoute.h */,
+				A93A6FB816BCC3B0008B0ED1 /* MIRoute.m */,
 			);
 			name = MIKit;
 			sourceTree = "<group>";
@@ -960,8 +966,10 @@
 				A95EA85A16B74DD000AB38E9 /* Icon@2x.png in Resources */,
 				A95EA85D16B74DD000AB38E9 /* iTunesArtwork in Resources */,
 				A95EA99B16B74DD100AB38E9 /* ChangeLog in Resources */,
-				A95EAB6F16B74FB000AB38E9 /* BasicImage.plist in Resources */,
-				A95EAB7016B74FB000AB38E9 /* BasicImage.png in Resources */,
+				A9FBAED816BDFB2100F1C541 /* MatchItMap.plist in Resources */,
+				A9FBAEDA16BDFEBD00F1C541 /* BlockInformation.plist in Resources */,
+				A903E7E116BE7DAF00FB341A /* BasicImage.plist in Resources */,
+				A903E7E216BE7DAF00FB341A /* BasicImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,12 +1087,10 @@
 				A95EAB5F16B74F4D00AB38E9 /* CCLayerTouch.m in Sources */,
 				A9EF455C16B7D98D0037631A /* MIBlock.m in Sources */,
 				A9EF455D16B7D98D0037631A /* MIBlockManager.m in Sources */,
-				A9EF456216B7D9C80037631A /* MIPositionConvert.c in Sources */,
-<<<<<<< HEAD
-				04F24D4316BCAA89004C20F7 /* MIRoute.m in Sources */,
-=======
-				A9C167C716BBD0A3000EAC36 /* MIMatching.m in Sources */,
->>>>>>> 小的修改
+				A93A6FB516BCC3AA008B0ED1 /* MIMatching.m in Sources */,
+				A93A6FB916BCC3B0008B0ED1 /* MIRoute.m in Sources */,
+				A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */,
+				A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

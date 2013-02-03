@@ -58,6 +58,10 @@ CCLabelTTF *welcomeLabel;
         CCLOG(@"很好,经提早把基础算法部分弄好了,可以开始做坐标转换了.");
         //2013.01.31
         CCLOG(@"昨天做了一个尝试,今天已经找到相对较好的方法了.今天返校,起床太早,犯困想睡觉了.明天继续!");
+        //2013.02.01
+        CCLOG(@"之前的一个错误用法造成了后面那么大的祸害...");
+        //2013.02.03
+        CCLOG(@"明天继续,效果很明显,但是今天实在是太累了.");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         NSLog(@"%f:%f",winSize.width,winSize.height);

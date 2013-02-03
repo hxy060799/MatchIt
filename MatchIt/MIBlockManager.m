@@ -12,12 +12,16 @@
 #import "CCLayerTouch.h"
 #import "MIBlockManagerDelegate.h"
 #import "MIMatching.h"
+#import "MIRoute.h"
+#import "MIMap.h"
 
 @implementation MIBlockManager
 
 @synthesize blocks;
 @synthesize blocksLayer;
 @synthesize selectedBlocks;
+
+@synthesize map;
 
 @synthesize delegate;
 
@@ -33,6 +37,8 @@
         blocksLayer.isTouchEnabled=YES;
         blocksLayer.delegete=self;
         
+        map=[[MIMap alloc]init];
+        
         self.blocksLayer.anchorPoint=ccp(0,0);
         self.blocksLayer.position=ccp(0,0);
         
@@ -41,7 +47,7 @@
         
         
         for(int i=0;i<BLOCKS_COUNT;i++){
-            MIBlock *aBlock=[MIBlock blockWithBlockPosition:MIIndexToPositon(i)];
+            MIBlock *aBlock=[MIBlock blockWithBlockPosition:[MIPositionConvert indexToPositonWithIndex:i]];
             
             aBlock.delegate=self;
             
@@ -51,15 +57,20 @@
         for(int i=0;i<[blocks count];i++){
             MIBlock *aBlock=[blocks objectAtIndex:i];
             
-            struct MIPosition blockPosition=MIIndexToPositon(i);
+            MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:i];
             
-            [aBlock setBlockSpriteFrameWithFileName:@"Block_Red.png"];
+            [aBlock setBlockSpriteFrameWithFileName:[map imageNameAtX:blockPosition.x Y:blockPosition.y]];
             //[aBlock setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",blockPosition.y]];
             
             aBlock.blockSprite.anchorPoint=ccp(0,0);
             aBlock.blockSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
             [blocksLayer addChild:aBlock.blockSprite z:0];
+            
+            aBlock.blockRouteSprite.anchorPoint=ccp(0,0);
+            aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+            
+            [blocksLayer addChild:aBlock.blockRouteSprite z:1];
         }
         
     }
@@ -77,11 +88,11 @@
 }
 
 -(MIBlock*)blockAtX:(int)x Y:(int)y{
-    return [self blockAtIndex:MIPositionToIndex(x, y)];
+    return [self blockAtIndex:[MIPositionConvert positionToIndexWithX:x y:y]];
 }
 
--(MIBlock*)blockAtPosition:(struct MIPosition)position{
-    return [self blockAtIndex:MIPositionToIndex(position.x, position.y)];
+-(MIBlock*)blockAtPosition:(MIPosition*)position{
+    return [self blockAtIndex:[MIPositionConvert positionToIndexWithX:position.x y:position.y]];
 }
 
 #pragma mark - Memory Management
@@ -97,9 +108,9 @@
 -(void)ccLayerTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch=[touches anyObject];
     CGPoint touchPosition=[[CCDirector sharedDirector]convertToGL:[touch locationInView:[touch view]]];
-    struct MIPosition blockPosition=MIScreenToPosition(touchPosition.x, touchPosition.y);
+    MIPosition *blockPosition=[MIPositionConvert screenToPositionWithX:touchPosition.x Y:touchPosition.y];
     
-    if(MIBlockISInArea(blockPosition.x, blockPosition.y)){
+    if([MIPositionConvert blockISInAreaWithX:blockPosition.x Y:blockPosition.y]){
         MIBlock *block=[self blockAtX:blockPosition.x Y:blockPosition.y];
         [block blockBeingSelected];
     }else{
@@ -112,30 +123,56 @@
 #pragma mark - MIBlockDelegate
 
 -(void)blockBeingSelected:(MIBlock *)block Index:(int)blockIndex NowSelected:(BOOL)selected{
-    struct MIPosition blockPosition=MIIndexToPositon(blockIndex);
-    //被选中的加入到数组,被取消选中的从数组中移除
-    if(selected==YES){
-        [block setBlockSpriteFrameWithFileName:@"Block_Blue.png"];
-        [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
-        
-        /*
-        if([selectedBlocks count]==2){
-            struct MIPosition blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
-            struct MIPosition blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
-            NSLog(@"%i",[MIMatching isMatchingDWithA:blockA B:blockB Manager:self]);
-        }
-        */
-    }else{
-        [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
-        for(int i=0;i<[selectedBlocks count];i++){
-            NSNumber *selectedIndex=[selectedBlocks objectAtIndex:i];
-            if([selectedIndex intValue]==blockIndex){
-                [selectedBlocks removeObject:selectedIndex];
+    MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:blockIndex];
+    //先判断这个方块是不是空的
+    if([map blockAtX:blockPosition.x Y:blockPosition.y]!=0){
+        //被选中的加入到数组,被取消选中的从数组中移除
+        if(selected==YES){
+            [block setBlockSpriteFrameWithFileName:@"Block_Blue.png"];
+            [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
+            
+            if([selectedBlocks count]==2){
+                /*NSMutableArray *array=[NSMutableArray array];
+                for(int i=0;i<[selectedBlocks count];i++){
+                    MIPosition *position=[self blockAtIndex:[[selectedBlocks objectAtIndex:i]intValue]].blockPosition;
+                    [array addObject:position];
+                }*/
+                
+                MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
+                MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
+                
+                NSMutableDictionary *matchResult=[MIMatching isMatchingBWithA:blockA B:blockB Map:map];
+                if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
+                     MIRoute *route=[matchResult objectForKey:@"Route"];
+                    [route parseVerteses];
+                    [MIRoute drawRouteWithRoute:route manager:self];
+                }else{
+                    NSLog(@"Not Matched");
+                }
+
+                
+            }
+            
+            /*
+             if([selectedBlocks count]==2){
+             MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
+             MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
+             NSLog(@"%i",[MIMatching isMatchingAWithA:blockA B:blockB Manager:self]);
+             }
+             */
+            
+        }else{
+            [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
+            for(int i=0;i<[selectedBlocks count];i++){
+                NSNumber *selectedIndex=[selectedBlocks objectAtIndex:i];
+                if([selectedIndex intValue]==blockIndex){
+                    [selectedBlocks removeObject:selectedIndex];
+                }
             }
         }
-    }
-    if(delegate){
-        [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,selected,[selectedBlocks count]]];
+        if(delegate){
+            [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,selected,[selectedBlocks count]]];
+        }
     }
 }
 

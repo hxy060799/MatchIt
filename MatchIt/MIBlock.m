@@ -12,6 +12,7 @@
 @implementation MIBlock
 
 @synthesize blockSprite;
+@synthesize blockRouteSprite;
 @synthesize selected;
 @synthesize delegate;
 @synthesize blockPosition;
@@ -21,8 +22,9 @@
 -(id)init{
     if(self=[super init]){
         blockSprite=[[[CCSprite alloc]init]autorelease];
+        blockRouteSprite=[[[CCSprite alloc]init]autorelease];
         self.selected=NO;
-        blockPosition=MIPositionMake(-1, -1);
+        blockPosition=[[MIPosition alloc]initWithX:-1 Y:-1];
     }
     return self;
 }
@@ -42,14 +44,14 @@
     return [[[self alloc]initWithSpriteFrameName:spriteFrameName]autorelease];
 }
 
--(id)initWithBlockPosition:(struct MIPosition)position_{
+-(id)initWithBlockPosition:(MIPosition*)position_{
     if(self=[self init]){
-        blockPosition=position_;
+        blockPosition=[[MIPosition alloc]initWithX:position_.x Y:position_.y];
     }
     return self;
 }
 
-+(id)blockWithBlockPosition:(struct MIPosition)position_{
++(id)blockWithBlockPosition:(MIPosition*)position_{
     return [[[self alloc]initWithBlockPosition:position_]autorelease];
 }
 
@@ -59,10 +61,15 @@
     [blockSprite setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:spriteFrameName]];
 }
 
+-(void)setBlockRouteSpriteFrameWithFileName:(NSString*)spriteFrameName{
+    [blockRouteSprite setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:spriteFrameName]];
+}
+
+
 -(void)blockBeingSelected{
     self.selected=!self.selected;
     if(delegate){
-        [delegate blockBeingSelected:self Index:MIPositionToIndex(blockPosition.x, blockPosition.y) NowSelected:self.selected];
+        [delegate blockBeingSelected:self Index:[MIPositionConvert positionToIndexWithX:blockPosition.x y:blockPosition.y] NowSelected:self.selected];
     }
 }
 
@@ -70,6 +77,7 @@
 
 -(void)dealloc{
     [delegate release];
+    [blockPosition release];
     [super dealloc];
 }
 

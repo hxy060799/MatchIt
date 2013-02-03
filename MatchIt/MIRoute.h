@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MIPositionConvert.h"
+
+@class MIBlockManager;
 
 @interface MIRoute : NSObject{
     NSMutableArray *routeVertexes;//路径顶点(折点)
@@ -22,7 +25,10 @@
 -(id)initWithRouteVertexes:(NSMutableArray*)vertexes;
 +(id)routeWithRouteVertexes:(NSMutableArray*)vertexes;
 
--(void)checkVertexes;
+-(BOOL)checkVertexes;
 -(void)parseVerteses;
+-(MIDirection)makeVertexDirectionWithVertex:(MIPosition*)vertex BlockA:(MIPosition*)blockA BlockB:(MIPosition*)blockB;
+
++(void)drawRouteWithRoute:(MIRoute*)route manager:(MIBlockManager*)manager;
 
 @end

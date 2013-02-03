@@ -15,17 +15,21 @@
 
 @interface MIBlock : NSObject{
     CCSprite *blockSprite;
+    CCSprite *blockRouteSprite;
+    
     BOOL selected;
     
-    struct MIPosition blockPosition;
+    MIPosition *blockPosition;
     
     id<MIBlockDelegate>delegate;
 }
 
 @property(retain,nonatomic)CCSprite *blockSprite;
+@property(retain,nonatomic)CCSprite *blockRouteSprite;
+
 @property(assign,nonatomic)BOOL selected;
 
-@property(readonly,nonatomic)struct MIPosition blockPosition;
+@property(readonly,nonatomic)MIPosition *blockPosition;
 
 @property(retain,nonatomic)id<MIBlockDelegate>delegate;
 
@@ -35,11 +39,12 @@
 -(id)initWithSpriteFrameName:(NSString*)spriteFrameName;
 +(id)blockWithSpriteFrameName:(NSString*)spriteFrameName;
 
--(id)initWithBlockPosition:(struct MIPosition)position_;
-+(id)blockWithBlockPosition:(struct MIPosition)position_;
+-(id)initWithBlockPosition:(MIPosition*)position_;
++(id)blockWithBlockPosition:(MIPosition*)position_;
 
 
 -(void)setBlockSpriteFrameWithFileName:(NSString*)spriteFrameName;
+-(void)setBlockRouteSpriteFrameWithFileName:(NSString*)spriteFrameName;
 
 
 -(void)blockBeingSelected;

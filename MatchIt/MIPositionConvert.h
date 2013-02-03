@@ -2,29 +2,49 @@
 //  MIPositionConvert.h
 //  MatchIt
 //
-//  Created by Bill on 12-12-31.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by Bill on 13-2-2.
+//
 //
 
-#include <stdio.h>
+#import <UIKit/UIKit.h>
 
-#ifndef MatchIt_MIPositionConvert_h
-#define MatchIt_MIPositionConvert_h
+//用于描述路径方块的指向
+typedef enum{
+    MIDirectionNone,
+    MIDirectionHorizontal,
+    MIDirectionVertical,
+    MIDirectionLeftTop,
+    MIDirectionLeftBottom,
+    MIDirectionRightTop,
+    MIDirectionRightBottom,
+}MIDirection;
 
-struct MIPosition{
+@interface MIPosition : NSObject{
     int x;
     int y;
-};
+    //只有用来描述路径的时候会被用到
+    MIDirection direction;
+}
 
-struct MIPosition MIPositionMake(int x,int y);
+@property(assign,nonatomic)int x;
+@property(assign,nonatomic)int y;
+@property(assign,nonatomic)MIDirection direction;
 
-int MIPositionToIndex(int x,int y);
-struct MIPosition MIIndexToPositon(int i);
+-(id)initWithX:(int)x_ Y:(int)y_;
++(id)positionWithX:(int)x_ Y:(int)y_;
 
-struct MIPosition MIScreenToPosition(float x,float y);
+@end
 
-int MIBlockISInArea(int x,int y);
+@interface MIPositionConvert : NSObject
 
-struct MIPosition MIHorizontalFlip(struct MIPosition position);
++(int)positionToIndexWithX:(int)x y:(int)y;
++(MIPosition*)indexToPositonWithIndex:(int)index;
 
-#endif
+
++(MIPosition*)screenToPositionWithX:(float)x Y:(float)y;
+
++(BOOL)blockISInAreaWithX:(int)x Y:(int)y;
+
++(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position;
+
+@end

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BlockInformation</key>
+	<array>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_Black.png</string>
+			<key>Description</key>
+			<string>空方块</string>
+		</dict>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_Red.png</string>
+			<key>Description</key>
+			<string>普通方块</string>
+		</dict>
+	</array>
+</dict>
+</plist>

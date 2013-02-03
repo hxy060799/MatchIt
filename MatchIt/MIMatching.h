@@ -12,20 +12,25 @@
 #import "MIBlockManager.h"
 #import "MIConfig.h"
 
+@class MIRoute;
+@class MIMap;
+
 @interface MIMatching : NSObject
 
-+(BOOL)isMatchingAWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager;
++(NSMutableDictionary*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
 
-+(BOOL)isMatchingBWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
-+(BOOL)isMatchingBWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
++(NSMutableDictionary*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
++(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip;
 
-+(BOOL)isMatchingCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
-+(BOOL)isMatchingCWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
++(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager;
++(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
 
-+(BOOL)isMatchingDWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager*)manager;
-+(BOOL)isMatchingDWithA:(struct MIPosition)blockA B:(struct MIPosition)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
++(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager;
++(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
 
 //在算法部分没有完成之前,用这个方法把算法走过的方块标记出来,用来调试算法
-+(void)markBlockWithNumber:(int)number position:(struct MIPosition)position Manager:(MIBlockManager*)manager HorizontalFlip:(BOOL)flip;
++(void)markBlockWithNumber:(int)number position:(MIPosition*)position Manager:(MIBlockManager*)manager HorizontalFlip:(BOOL)flip;
+
++(MIPosition*)flipBlockWithPosition:(MIPosition*)position Flip:(BOOL)flip;
 
 @end

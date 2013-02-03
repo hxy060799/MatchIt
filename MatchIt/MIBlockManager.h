@@ -12,6 +12,7 @@
 
 @class CCLayerTouch;
 @class MIBlock;
+@class MIMap;
 
 @protocol MIBlockManagerDelegate;
 
@@ -22,6 +23,8 @@
     
     NSMutableArray *selectedBlocks;
     
+    MIMap *map;
+    
     //T
     id<MIBlockManagerDelegate>delegate;
 }
@@ -31,6 +34,8 @@
 @property(retain,nonatomic)CCLayerTouch *blocksLayer;
 
 @property(retain,nonatomic)NSMutableArray *selectedBlocks;
+
+@property(retain,nonatomic)MIMap *map;
 
 @property(retain,nonatomic)id<MIBlockManagerDelegate>delegate;
 
