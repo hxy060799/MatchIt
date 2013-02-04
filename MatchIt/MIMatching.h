@@ -25,8 +25,8 @@
 +(NSMutableDictionary*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
 +(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip;
 
-+(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager;
-+(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
++(NSMutableDictionary*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
++(MIRoute*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip;
 
 //在算法部分没有完成之前,用这个方法把算法走过的方块标记出来,用来调试算法
 +(void)markBlockWithNumber:(int)number position:(MIPosition*)position Manager:(MIBlockManager*)manager HorizontalFlip:(BOOL)flip;
