@@ -14,14 +14,62 @@
 
 @implementation MIMatching
 
-+(NSMutableDictionary*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
-    //第一种直线方案不进行坐标转换,直接把另外一种方案放到里面.
++(NSMutableDictionary*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
     NSMutableDictionary *result=[NSMutableDictionary dictionary];
+    [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
+    MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:NO];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:YES];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:NO];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:YES];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingDWithA:blockA B:blockB Map:map HorizontalFlip:NO];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
+    route=[self isMatchingDWithA:blockA B:blockB Map:map HorizontalFlip:YES];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
     [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
     
-    BOOL isMatched=YES;
+    return result;
+}
+
++(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
+    //第一种直线方案不进行坐标转换,直接把另外一种方案放到里面.
+    BOOL isMatched=NO;
     
     if(blockA.y==blockB.y){
+        isMatched=YES;
         //横着
         if(blockA.x>blockB.x){
             MIPosition *positionTemp=blockB;
@@ -35,6 +83,7 @@
             }
         }
     }else if(blockA.x==blockB.x){
+        isMatched=YES;
         //竖着
         if(blockA.y>blockB.y){
             MIPosition *positionTemp=blockB;
@@ -50,37 +99,20 @@
     }
     
     if(isMatched){
-        [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-        [result setObject:[MIRoute routeWithRouteVertexes:[NSMutableArray arrayWithObjects:blockA,blockB,nil]] forKey:@"Route"];
+        return [MIRoute routeWithRouteVertexes:[NSMutableArray arrayWithObjects:blockA,blockB,nil]];
     }
     
-    return result;
-}
-
-+(NSMutableDictionary*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
-    NSMutableDictionary *result=[NSMutableDictionary dictionary];
-    [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
-    MIRoute *routeA=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:NO];
-    if(routeA!=nil){
-        [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-        [result setObject:routeA forKey:@"Route"];
-    }else{
-        MIRoute *routeB=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:YES];
-        if(routeB!=nil){
-            [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-            [result setObject:routeB forKey:@"Route"];
-        }
-    }
-    return result;
+    return nil;
 }
 
 +(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip{
-    BOOL isMatched=YES;
+    BOOL isMatched=NO;
     
     blockA=[self flipBlockWithPosition:blockA Flip:flip];
     blockB=[self flipBlockWithPosition:blockB Flip:flip];
     
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)){
+        isMatched=YES;
         //方块A在左上
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             MIPosition *positionTemp=blockB;
@@ -143,31 +175,14 @@
     return nil;
 }
 
-+(NSMutableDictionary*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
-    NSMutableDictionary *result=[NSMutableDictionary dictionary];
-    [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
-    MIRoute *routeA=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:NO];
-    if(routeA!=nil){
-        [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-        [result setObject:routeA forKey:@"Route"];
-    }else{
-        MIRoute *routeB=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:YES];
-        if(routeB!=nil){
-            [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-            [result setObject:routeB forKey:@"Route"];
-        }
-    }
-    return result;
-}
-
-
 +(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip{
-    BOOL isMatched=YES;
+    BOOL isMatched=NO;
     
     blockA=[self flipBlockWithPosition:blockA Flip:flip];
     blockB=[self flipBlockWithPosition:blockB Flip:flip];
     
-    if((blockA.x<=blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)){
+    if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)||(blockA.x==blockB.x)||(blockA.y==blockB.y)){
+        isMatched=YES;
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             MIPosition *positionTemp=blockB;
             blockB=blockA;
@@ -185,23 +200,23 @@
                     isMatched=NO;
                 }
             }
-            for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
-                isMatched=YES;
-                //左右两边
-                for(int i=blockA.y+1;i<=j;i++){
-                    MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
-                    position=[self flipBlockWithPosition:position Flip:flip];
-                    if([map blockAtX:position.x Y:position.y]!=0){
-                        isMatched=NO;
+            if(isMatched){
+                for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
+                    isMatched=YES;
+                    //左右两边
+                    for(int i=blockA.y+1;i<=j;i++){
+                        MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                        position=[MIPosition positionWithX:blockB.x Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
                     }
-                    position=[MIPosition positionWithX:blockB.x Y:i];
-                    position=[self flipBlockWithPosition:position Flip:flip];
-                    if([map blockAtX:position.x Y:position.y]!=0){
-                        isMatched=NO;
-                    }
-                }
-                //上面
-                if(isMatched){
+                    //上面
                     for(int i=blockA.x+1;i<blockB.x;i++){
                         MIPosition *position=[MIPosition positionWithX:i Y:j];
                         position=[self flipBlockWithPosition:position Flip:flip];
@@ -371,31 +386,14 @@
     
 }
 
-
-+(NSMutableDictionary*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
-    NSMutableDictionary *result=[NSMutableDictionary dictionary];
-    [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
-    MIRoute *routeA=[self isMatchingDWithA:blockA B:blockB Map:map HorizontalFlip:NO];
-    if(routeA!=nil){
-        [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-        [result setObject:routeA forKey:@"Route"];
-    }else{
-        MIRoute *routeB=[self isMatchingDWithA:blockA B:blockB Map:map HorizontalFlip:YES];
-        if(routeB!=nil){
-            [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-            [result setObject:routeB forKey:@"Route"];
-        }
-    }
-    return result;
-}
-
 +(MIRoute*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip{
-    BOOL isMatched=YES;
+    BOOL isMatched=NO;
     
     blockA=[self flipBlockWithPosition:blockA Flip:flip];
     blockB=[self flipBlockWithPosition:blockB Flip:flip];
     
     if(((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y))&&(abs(blockA.y-blockB.y)>1)){
+        isMatched=YES;
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             MIPosition *positionTemp=blockB;
             blockB=blockA;
@@ -479,16 +477,6 @@
     }else{
         return NO;
     }
-}
-
-+(void)markBlockWithNumber:(int)number position:(MIPosition*)position Manager:(MIBlockManager*)manager HorizontalFlip:(BOOL)flip{
-    MIPosition *blockTemp=nil;
-    if(flip){
-        blockTemp=[MIPositionConvert horizontalFlipWithPosition:[MIPosition positionWithX:position.x Y:position.y]];
-    }else{
-        blockTemp=[MIPosition positionWithX:position.x Y:position.y];
-    }
-    [[manager blockAtX:blockTemp.x Y:blockTemp.y]setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",number]];
 }
 
 +(MIPosition*)flipBlockWithPosition:(MIPosition*)position Flip:(BOOL)flip{
