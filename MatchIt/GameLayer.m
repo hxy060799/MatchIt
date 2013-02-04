@@ -62,6 +62,8 @@ CCLabelTTF *welcomeLabel;
         CCLOG(@"之前的一个错误用法造成了后面那么大的祸害...");
         //2013.02.03
         CCLOG(@"明天继续,效果很明显,但是今天实在是太累了.");
+        //2013.02.04
+        CCLOG(@"做了一个半钟头,也总算把第三种情况完成了.");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         NSLog(@"%f:%f",winSize.width,winSize.height);

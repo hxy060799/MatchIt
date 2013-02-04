@@ -22,8 +22,8 @@
 +(NSMutableDictionary*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
 +(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip;
 
-+(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager;
-+(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;
++(NSMutableDictionary*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
++(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip;
 
 +(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager;
 +(BOOL)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip;

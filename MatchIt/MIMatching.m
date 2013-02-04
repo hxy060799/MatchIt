@@ -66,7 +66,7 @@
         [result setObject:routeA forKey:@"Route"];
     }else{
         MIRoute *routeB=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:YES];
-        if([self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:YES]!=nil){
+        if(routeB!=nil){
             [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
             [result setObject:routeB forKey:@"Route"];
         }
@@ -143,150 +143,228 @@
     return nil;
 }
 
-+(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager*)manager{
-    if([self isMatchingCWithA:blockA B:blockB Manager:manager HorizontalFlip:NO]){
-        return YES;
-    }else if([self isMatchingCWithA:blockA B:blockB Manager:manager HorizontalFlip:YES]){
-        return YES;
++(NSMutableDictionary*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
+    NSMutableDictionary *result=[NSMutableDictionary dictionary];
+    [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
+    MIRoute *routeA=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:NO];
+    if(routeA!=nil){
+        [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
+        [result setObject:routeA forKey:@"Route"];
     }else{
-        return NO;
+        MIRoute *routeB=[self isMatchingCWithA:blockA B:blockB Map:map HorizontalFlip:YES];
+        if(routeB!=nil){
+            [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
+            [result setObject:routeB forKey:@"Route"];
+        }
     }
+    return result;
 }
 
 
-+(BOOL)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Manager:(MIBlockManager *)manager HorizontalFlip:(BOOL)flip{
-    if(flip==YES){
-        blockA=[MIPositionConvert horizontalFlipWithPosition:blockA];
-        blockB=[MIPositionConvert horizontalFlipWithPosition:blockB];
-    }
++(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map HorizontalFlip:(BOOL)flip{
+    BOOL isMatched=YES;
     
-    if((blockA.x<blockB.x && blockA.y>=blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)){
+    blockA=[self flipBlockWithPosition:blockA Flip:flip];
+    blockB=[self flipBlockWithPosition:blockB Flip:flip];
+    
+    if((blockA.x<=blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<=blockB.y)){
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             MIPosition *positionTemp=blockB;
             blockB=blockA;
             blockA=positionTemp;
         }
         
-        //上方
         if(blockA.y<BLOCKS_YCOUNT-1){
-            int count=0;
+            isMatched=YES;
+            //上方
             //公共部分
             for(int i=blockA.y;i>blockB.y;i--){
-                //此为判断部分替代品
-                count++;
-                [self markBlockWithNumber:count position:[MIPosition positionWithX:blockB.x Y:i] Manager:manager HorizontalFlip:flip];
+                MIPosition *position=[MIPosition positionWithX:blockB.x Y:i];
+                position=[self flipBlockWithPosition:position Flip:flip];
+                if([map blockAtX:position.x Y:position.y]!=0){
+                    isMatched=NO;
+                }
             }
             for(int j=blockA.y+1;j<BLOCKS_YCOUNT;j++){
+                isMatched=YES;
                 //左右两边
-                count=0;
                 for(int i=blockA.y+1;i<=j;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:blockA.x Y:i] Manager:manager HorizontalFlip:flip];
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:blockB.x Y:i] Manager:manager HorizontalFlip:flip];
+                    MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
+                    position=[self flipBlockWithPosition:position Flip:flip];
+                    if([map blockAtX:position.x Y:position.y]!=0){
+                        isMatched=NO;
+                    }
+                    position=[MIPosition positionWithX:blockB.x Y:i];
+                    position=[self flipBlockWithPosition:position Flip:flip];
+                    if([map blockAtX:position.x Y:position.y]!=0){
+                        isMatched=NO;
+                    }
                 }
                 //上面
-                count=0;
-                for(int i=blockA.x+1;i<blockB.x;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:j] Manager:manager HorizontalFlip:flip];
+                if(isMatched){
+                    for(int i=blockA.x+1;i<blockB.x;i++){
+                        MIPosition *position=[MIPosition positionWithX:i Y:j];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    if(isMatched==YES){
+                        NSMutableArray *routeVertexes=[NSMutableArray array];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockA Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:blockA.x Y:j] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:blockB.x Y:j] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockB Flip:flip]];
+                        return [MIRoute routeWithRouteVertexes:routeVertexes];
+                    }
                 }
             }
         }
-        
-        //下方
         if(blockB.y>0){
-            int count=0;
+            isMatched=YES;
+            //下方
             //公共部分
             for(int i=blockA.y-1;i>=blockB.y;i--){
-                //此为判断部分替代品
-                count++;
-                [self markBlockWithNumber:count position:[MIPosition positionWithX:blockA.x Y:i] Manager:manager HorizontalFlip:flip];
-            }
-            for(int j=blockB.y-1;j>=0;j--){
-                //左右两边
-                count=0;
-                for(int i=j;i<=blockB.y-1;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:blockA.x Y:i] Manager:manager HorizontalFlip:flip];
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:blockB.x Y:i] Manager:manager HorizontalFlip:flip];
+                MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
+                position=[self flipBlockWithPosition:position Flip:flip];
+                if([map blockAtX:position.x Y:position.y]!=0){
+                    isMatched=NO;
                 }
-                //下面
-                count=0;
-                for(int i=blockA.x+1;i<blockB.x;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:j] Manager:manager HorizontalFlip:flip];
+            }
+            
+            if(isMatched){
+                for(int j=blockB.y-1;j>=0;j--){
+                    isMatched=YES;
+                    //左右两边
+                    for(int i=j;i<=blockB.y-1;i++){
+                        MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                        position=[MIPosition positionWithX:blockB.x Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    //下面
+                    for(int i=blockA.x+1;i<blockB.x;i++){
+                        MIPosition *position=[MIPosition positionWithX:i Y:j];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    if(isMatched==YES){
+                        NSMutableArray *routeVertexes=[NSMutableArray array];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockA Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:blockA.x Y:j] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:blockB.x Y:j] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockB Flip:flip]];
+                        return [MIRoute routeWithRouteVertexes:routeVertexes];
+                    }
                 }
             }
         }
-        
-        //左方
         if(blockA.x>0){
-            int count=0;
+            isMatched=YES;
+            //左方
             //公共部分
             for(int i=blockA.x;i<blockB.x;i++){
-                //此为判断部分替代品
-                count++;
-                [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockB.y] Manager:manager HorizontalFlip:flip];
-            }
-            
-            for(int j=blockA.x-1;j>=0;j--){
-                //上下两边
-                count=0;
-                for(int i=j;i<=blockA.x-1;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockA.y] Manager:manager HorizontalFlip:flip];
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockB.y] Manager:manager HorizontalFlip:flip];
+                MIPosition *position=[MIPosition positionWithX:i Y:blockB.y];
+                position=[self flipBlockWithPosition:position Flip:flip];
+                if([map blockAtX:position.x Y:position.y]!=0){
+                    isMatched=NO;
                 }
-                
-                //左面
-                count=0;
-                for(int i=blockA.y-1;i>blockB.y;i--){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:j] Manager:manager HorizontalFlip:flip];
-                }
-                
             }
-            
+            if(isMatched){
+                for(int j=blockA.x-1;j>=0;j--){
+                    isMatched=YES;
+                    //上下两边
+                    for(int i=j;i<=blockA.x-1;i++){
+                        MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                        position=[MIPosition positionWithX:i Y:blockB.y];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    
+                    //左面
+                    for(int i=blockA.y-1;i>blockB.y;i--){
+                        MIPosition *position=[MIPosition positionWithX:j Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    if(isMatched==YES){
+                        NSMutableArray *routeVertexes=[NSMutableArray array];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockA Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:j Y:blockA.y] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:j Y:blockB.y] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockB Flip:flip]];
+                        return [MIRoute routeWithRouteVertexes:routeVertexes];
+                    }
+                }
+            }
         }
         
-        //右方
         if(blockB.x<BLOCKS_XCOUNT-1){
-            int count=0;
+            isMatched=YES;
+            //右方
             //公共部分
             for(int i=blockA.x+1;i<=blockB.x;i++){
-                //此为判断部分替代品
-                count++;
-                [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockA.y] Manager:manager HorizontalFlip:flip];
-            }
-            
-            for(int j=blockB.x+1;j<BLOCKS_XCOUNT;j++){
-                //上下两边
-                count=0;
-                for(int i=blockB.x+1;i<=j;i++){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockA.y] Manager:manager HorizontalFlip:flip];
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:blockB.y] Manager:manager HorizontalFlip:flip];
+                MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
+                position=[self flipBlockWithPosition:position Flip:flip];
+                if([map blockAtX:position.x Y:position.y]!=0){
+                    isMatched=NO;
                 }
-                
-                //右面
-                count=0;
-                for(int i=blockA.y-1;i>blockB.y;i--){
-                    //此为判断部分替代品
-                    count++;
-                    [self markBlockWithNumber:count position:[MIPosition positionWithX:i Y:j] Manager:manager HorizontalFlip:flip];
-                }
-                
             }
-            
+            if(isMatched) {
+                for(int j=blockB.x+1;j<BLOCKS_XCOUNT;j++){
+                    isMatched=YES;
+                    //上下两边
+                    for(int i=blockB.x+1;i<=j;i++){
+                        for(int i=j;i<=blockA.x-1;i++){
+                            MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
+                            position=[self flipBlockWithPosition:position Flip:flip];
+                            if([map blockAtX:position.x Y:position.y]!=0){
+                                isMatched=NO;
+                            }
+                            position=[MIPosition positionWithX:i Y:blockB.y];
+                            position=[self flipBlockWithPosition:position Flip:flip];
+                            if([map blockAtX:position.x Y:position.y]!=0){
+                                isMatched=NO;
+                            }
+                        }
+                    }
+                    //右面
+                    for(int i=blockA.y-1;i>blockB.y;i--){
+                        MIPosition *position=[MIPosition positionWithX:j Y:i];
+                        position=[self flipBlockWithPosition:position Flip:flip];
+                        if([map blockAtX:position.x Y:position.y]!=0){
+                            isMatched=NO;
+                        }
+                    }
+                    if(isMatched==YES){
+                        NSMutableArray *routeVertexes=[NSMutableArray array];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockA Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:j Y:blockA.y] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:[MIPosition positionWithX:j Y:blockB.y] Flip:flip]];
+                        [routeVertexes addObject:[self flipBlockWithPosition:blockB Flip:flip]];
+                        return [MIRoute routeWithRouteVertexes:routeVertexes];
+                    }
+                }
+            }
         }
-        return YES;
+        
+        return nil;
     }else{
         return NO;
     }

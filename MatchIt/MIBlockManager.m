@@ -141,7 +141,7 @@
                 MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
                 MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
                 
-                NSMutableDictionary *matchResult=[MIMatching isMatchingBWithA:blockA B:blockB Map:map];
+                NSMutableDictionary *matchResult=[MIMatching isMatchingCWithA:blockA B:blockB Map:map];
                 if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
                      MIRoute *route=[matchResult objectForKey:@"Route"];
                     [route parseVerteses];
