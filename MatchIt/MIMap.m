@@ -34,7 +34,7 @@
 }
 
 -(int)blockAtX:(int)x Y:(int)y{
-    return [[[[map objectAtIndex:10]objectAtIndex:y]objectAtIndex:x]intValue];
+    return [[[[map objectAtIndex:1]objectAtIndex:y]objectAtIndex:x]intValue];
 }
 
 -(NSString*)imageNameWithImgId:(int)imgId{

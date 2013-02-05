@@ -70,4 +70,33 @@
     return [MIPosition positionWithX:-position.x+BLOCKS_XCOUNT-1 Y:position.y];
 }
 
++(MIPosition*)ConvertPositionWithConversion:(MIConversion)conversion Position:(MIPosition*)position inverse:(BOOL)inverse{
+    //头两种:对称变换,逆运算和本身运算相同
+    if(conversion==MIConversionHorizontalFlip){
+        return [MIPosition positionWithX:-position.x+BLOCKS_XCOUNT-1 Y:position.y];
+    }else if(conversion==MIConversionVerticalFlip){
+        return [MIPosition positionWithX:position.x Y:-position.y+BLOCKS_YCOUNT-1];
+    }
+    
+    if(conversion==MIConversionPlus180Degrees){
+        return [MIPosition positionWithX:BLOCKS_XCOUNT-position.x-1 Y:BLOCKS_YCOUNT-position.y-1];
+    }
+    
+    //很重要,执行90度旋转变化之前如果是逆运算，就必须将它宽和高互换.
+    int widthTemp=BLOCKS_XCOUNT;
+    int heightTemp=BLOCKS_YCOUNT;
+    if(inverse){
+        widthTemp=BLOCKS_YCOUNT;
+        heightTemp=BLOCKS_XCOUNT;
+    }
+    
+    if(conversion==MIConversionPlus90Degrees){
+        return [MIPosition positionWithX:-position.y+heightTemp-1 Y:position.x];
+    }else if(conversion==MIConversionMinus90Degrees){
+        return [MIPosition positionWithX:position.y Y:-position.x+heightTemp-1];
+    }
+    
+    return [MIPosition positionWithX:position.x Y:position.y];
+}
+
 @end

@@ -16,8 +16,18 @@ typedef enum{
     MIDirectionLeftTop,
     MIDirectionLeftBottom,
     MIDirectionRightTop,
-    MIDirectionRightBottom,
+    MIDirectionRightBottom
 }MIDirection;
+
+//基础坐标转换
+typedef enum{
+    MIConversionNone,
+    MIConversionHorizontalFlip,
+    MIConversionVerticalFlip,
+    MIConversionPlus90Degrees,
+    MIConversionMinus90Degrees,
+    MIConversionPlus180Degrees
+}MIConversion;
 
 @interface MIPosition : NSObject{
     int x;
@@ -44,6 +54,11 @@ typedef enum{
 +(MIPosition*)screenToPositionWithX:(float)x Y:(float)y;
 
 +(BOOL)blockISInAreaWithX:(int)x Y:(int)y;
+
+//坐标转换,这里暂时不支持旋转和对称换算的叠加
++(MIPosition*)ConvertPositionWithConversion:(MIConversion)conversion Position:(MIPosition*)position inverse:(BOOL)inverse;
+//使用给定的转换方式的逆运算进行转换
++(MIPosition*)inverseConvertWithConversion:(MIConversion)conversion Position:(MIPosition*)position;
 
 +(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position;
 
