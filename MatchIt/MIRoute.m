@@ -98,6 +98,10 @@
 }
 
 -(void)parseVerteses{
+    for(MIPosition *position in [self routeVertexes]){
+        NSLog(@"****x:%i,y:%i",position.x,position.y);
+    }
+    
     if([self checkVertexes]==NO){
         return;
     }
@@ -105,6 +109,7 @@
     //确定原点方向,并在路线中加入原点
     for(int i=1;i<routeVertexes.count-1;i++){
         [self vertexAtIndex:i].direction=[self makeVertexDirectionWithVertex:[self vertexAtIndex:i] BlockA:[self vertexAtIndex:i-1] BlockB:[self vertexAtIndex:i+1]];
+        [throughPoints addObject:[self vertexAtIndex:i]];
     }
     //生成路径
     for(int i=0;i<routeVertexes.count-1;i++){
@@ -142,9 +147,8 @@
                 [throughPoints addObject:position];
             }
         }
-        [throughPoints addObject:thisBlock];
     }
-    [throughPoints addObject:[routeVertexes objectAtIndex:routeVertexes.count-1]];
+    //[throughPoints addObject:[routeVertexes objectAtIndex:routeVertexes.count-1]];
 }
 
 +(void)drawRouteWithRoute:(MIRoute*)route manager:(MIBlockManager*)manager{

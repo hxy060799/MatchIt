@@ -83,19 +83,19 @@
     }
     
     //很重要,执行90度旋转变化之前如果是逆运算，就必须将它宽和高互换.
-    int widthTemp=BLOCKS_XCOUNT;
-    int heightTemp=BLOCKS_YCOUNT;
-    if(inverse){
-        widthTemp=BLOCKS_YCOUNT;
-        heightTemp=BLOCKS_XCOUNT;
+    if(!inverse){
+        if(conversion==MIConversionPlus90Degrees){
+            return [MIPosition positionWithX:position.y Y:-position.x+BLOCKS_YCOUNT-1];
+        }else if(conversion==MIConversionMinus90Degrees){
+            return [MIPosition positionWithX:-position.y+BLOCKS_YCOUNT-1 Y:position.x];
+        }
+    }else{
+        if(conversion==MIConversionPlus90Degrees){
+            return [MIPosition positionWithX:-position.y+BLOCKS_YCOUNT-1 Y:position.x];
+        }else if(conversion==MIConversionMinus90Degrees){
+            return [MIPosition positionWithX:position.y Y:-position.x+BLOCKS_YCOUNT-1];
+        }
     }
-    
-    if(conversion==MIConversionPlus90Degrees){
-        return [MIPosition positionWithX:-position.y+heightTemp-1 Y:position.x];
-    }else if(conversion==MIConversionMinus90Degrees){
-        return [MIPosition positionWithX:position.y Y:-position.x+heightTemp-1];
-    }
-    
     return [MIPosition positionWithX:position.x Y:position.y];
 }
 

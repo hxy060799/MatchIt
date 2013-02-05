@@ -125,18 +125,23 @@
 -(void)blockBeingSelected:(MIBlock *)block Index:(int)blockIndex NowSelected:(BOOL)selected{
     MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:blockIndex];
     //先判断这个方块是不是空的
-    if([map blockAtX:blockPosition.x Y:blockPosition.y]!=0){
+    if(true/*[map blockAtX:blockPosition.x Y:blockPosition.y]!=0*/){
         //被选中的加入到数组,被取消选中的从数组中移除
         if(selected==YES){
             [block setBlockSpriteFrameWithFileName:@"Block_Blue.png"];
             [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
             
             if([selectedBlocks count]==2){
-                /*NSMutableArray *array=[NSMutableArray array];
+                /*
+                NSMutableArray *array=[NSMutableArray array];
                 for(int i=0;i<[selectedBlocks count];i++){
                     MIPosition *position=[self blockAtIndex:[[selectedBlocks objectAtIndex:i]intValue]].blockPosition;
                     [array addObject:position];
-                }*/
+                    MIRoute *route=[MIRoute routeWithRouteVertexes:array];
+                    [route parseVerteses];
+                    [MIRoute drawRouteWithRoute:route manager:self];
+                }
+                */
                 
                 MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
                 MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
@@ -149,17 +154,8 @@
                 }else{
                     NSLog(@"Not Matched");
                 }
-
                 
             }
-            
-            /*
-             if([selectedBlocks count]==2){
-             MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
-             MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
-             NSLog(@"%i",[MIMatching isMatchingAWithA:blockA B:blockB Manager:self]);
-             }
-             */
             
         }else{
             [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
