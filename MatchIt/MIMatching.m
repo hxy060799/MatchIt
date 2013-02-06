@@ -17,6 +17,7 @@
 +(NSMutableDictionary*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
     NSMutableDictionary *result=[NSMutableDictionary dictionary];
     [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
+    /*
     MIRoute *route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:MIConversionNone HorizontalFlip:NO];
     if(route!=nil){
         [result setObject:route forKey:@"Route"];
@@ -28,6 +29,7 @@
         [result setObject:route forKey:@"Route"];
         return result;
     }
+     */
     /*
     //1
     MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:MIConversionNone];
@@ -40,29 +42,29 @@
         [result setObject:route forKey:@"Route"];
         return result;
     }
-    //2
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:MIConversionNone HorizontalFlip:NO];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:MIConversionPlus180Degrees HorizontalFlip:NO];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        NSLog(@"2");
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:MIConversionNone HorizontalFlip:YES];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:MIConversionPlus180Degrees HorizontalFlip:YES];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
     */
+    //2
+    MIRoute *route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpin180Degrees]];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinNone]];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+        route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpin180Degrees]];
+    if(route!=nil){
+        [result setObject:route forKey:@"Route"];
+        return result;
+    }
+    
     /*
     route=[self isMatchingBWithA:blockA B:blockB Map:map HorizontalFlip:YES];
     if(route!=nil){
@@ -100,15 +102,15 @@
     return result;
 }
 
-+(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion)conversion{
++(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     BOOL isMatched=NO;
     
     //返回结果的时候,需要使用没有转换过的点
     MIPosition *blockA_=[MIPosition positionWithX:blockA.x Y:blockA.y];
     MIPosition *blockB_=[MIPosition positionWithX:blockB.x Y:blockB.y];
     
-    blockA=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockA inverse:NO];
-    blockB=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockB inverse:NO];
+    blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
+    blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
     
     if(blockA.y==blockB.y){
         isMatched=YES;
@@ -121,7 +123,7 @@
         
         for(int i=blockA.x+1;i<blockB.x;i++){
             MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
-            position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+            position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
                 break;
@@ -136,18 +138,11 @@
     return nil;
 }
 
-+(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion)conversion HorizontalFlip:(BOOL)flip{
++(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     BOOL isMatched=NO;
     
-    blockA=[self flipBlockWithPosition:blockA Flip:flip];
-    blockB=[self flipBlockWithPosition:blockB Flip:flip];
-    
-    MIPosition *blockA_=[MIPosition positionWithX:blockA.x Y:blockA.y];
-    MIPosition *blockB_=[MIPosition positionWithX:blockB.x Y:blockB.y];
-    
-    blockA=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockA inverse:NO];
-    blockB=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockB inverse:NO];
-    
+    blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
+    blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
     
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)){
         isMatched=YES;
@@ -160,9 +155,7 @@
         
         //先右后下
         for(int i=blockA.x+1;i<=blockB.x;i++){
-            MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
-            position=[self flipBlockWithPosition:position Flip:flip];
-            position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+            MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
                 break;
@@ -170,9 +163,7 @@
         }
         
         for(int i=blockA.y-1;i>blockB.y;i--){
-            MIPosition *position=[MIPosition positionWithX:blockB.x Y:i];
-            position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
-            position=[self flipBlockWithPosition:position Flip:flip];
+            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
                 break;
@@ -182,14 +173,14 @@
         if(isMatched==YES){
             NSMutableArray *routeVertexes=[NSMutableArray array];
             
-            [routeVertexes addObject:[self flipBlockWithPosition:blockA_ Flip:flip]];
-            
-            MIPosition *position=[MIPosition positionWithX:blockB.x Y:blockA.y];
-            position=[self flipBlockWithPosition:position Flip:flip];
-            position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+            MIPosition *position=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:YES];
             [routeVertexes addObject:position];
             
-            [routeVertexes addObject:[self flipBlockWithPosition:blockB_ Flip:flip]];
+            MIPosition *position2=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:blockA.y inverse:YES];
+            [routeVertexes addObject:position2];
+            
+            MIPosition *position3=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:YES];
+            [routeVertexes addObject:position3];
             
             return [MIRoute routeWithRouteVertexes:routeVertexes];
         }
@@ -197,13 +188,11 @@
     return nil;
 }
 
-#warning 在最后返回的时候,需要将被转换过的坐标重新转换回来.
-
-+(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion)conversion HorizontalFlip:(BOOL)flip{
++(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion HorizontalFlip:(BOOL)flip{
     BOOL isMatched=NO;
     
-    blockA=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockA inverse:NO];
-    blockB=[MIPositionConvert ConvertPositionWithConversion:conversion Position:blockB inverse:NO];
+    blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
+    blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
     
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)||(blockA.x==blockB.x)||(blockA.y==blockB.y)){
         isMatched=YES;
@@ -219,7 +208,7 @@
             //公共部分
             for(int i=blockA.y;i>blockB.y;i--){
                 MIPosition *position=[MIPosition positionWithX:blockB.x Y:i];
-                position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+                position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
                 if([map blockAtX:position.x Y:position.y]!=0){
                     isMatched=NO;
                     break;
@@ -231,13 +220,13 @@
                     //左右两边
                     for(int i=blockA.y+1;i<=j;i++){
                         MIPosition *position=[MIPosition positionWithX:blockA.x Y:i];
-                        position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+                        position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
                         if([map blockAtX:position.x Y:position.y]!=0){
                             isMatched=NO;
                             break;
                         }
                         position=[MIPosition positionWithX:blockB.x Y:i];
-                        position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+                        position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
                         if([map blockAtX:position.x Y:position.y]!=0){
                             isMatched=NO;
                             break;
@@ -246,7 +235,7 @@
                     //上面
                     for(int i=blockA.x+1;i<blockB.x;i++){
                         MIPosition *position=[MIPosition positionWithX:i Y:j];
-                        position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+                        position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
                         if([map blockAtX:position.x Y:position.y]!=0){
                             isMatched=NO;
                         }
@@ -254,19 +243,19 @@
                     if(isMatched==YES){
                         NSMutableArray *routeVertexes=[NSMutableArray array];
                         MIPosition *position=blockA;
-                        position=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position inverse:YES];
+                        position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
                         [routeVertexes addObject:position];
                         
                         MIPosition *position2=[MIPosition positionWithX:blockA.x Y:j];
-                        position2=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position2 inverse:YES];
+                        position2=[MIPositionConvert convertWithConversion:conversion Position:position2 inverse:YES];
                         [routeVertexes addObject:position2];
                         
                         MIPosition *position3=[MIPosition positionWithX:blockB.x Y:j];
-                        position3=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position3 inverse:YES];
+                        position3=[MIPositionConvert convertWithConversion:conversion Position:position3 inverse:YES];
                         [routeVertexes addObject:position3];
                         
                         MIPosition *position4=blockB;
-                        position4=[MIPositionConvert ConvertPositionWithConversion:conversion Position:position4 inverse:YES];
+                        position4=[MIPositionConvert convertWithConversion:conversion Position:position4 inverse:YES];
                         [routeVertexes addObject:position4];
                         return [MIRoute routeWithRouteVertexes:routeVertexes];
                     }

@@ -21,13 +21,33 @@ typedef enum{
 
 //基础坐标转换
 typedef enum{
-    MIConversionNone,
-    MIConversionHorizontalFlip,
-    MIConversionVerticalFlip,
-    MIConversionPlus90Degrees,
-    MIConversionMinus90Degrees,
-    MIConversionPlus180Degrees
-}MIConversion;
+    MIFlipNone,
+    MIFlipHorizontal,
+    MIFlipVertical
+}MIConversionFlip;
+
+typedef enum{
+    MISpinNone,
+    MISpinPlus90Degrees,
+    MISpinMinus90Degrees,
+    MISpin180Degrees
+}MIConversionSpin;
+
+@interface MIConversion : NSObject{
+    MIConversionFlip flip;
+    MIConversionSpin spin;
+}
+
+@property(assign,nonatomic)MIConversionFlip flip;
+@property(assign,nonatomic)MIConversionSpin spin;
+
+-(id)init;
++(id)conversion;
+
+-(id)initWithFlip:(MIConversionFlip)flip_ Spin:(MIConversionSpin)spin_;
++(id)conversionWithFlip:(MIConversionFlip)flip_ Spin:(MIConversionSpin)spin_;
+
+@end
 
 @interface MIPosition : NSObject{
     int x;
@@ -56,9 +76,8 @@ typedef enum{
 +(BOOL)blockISInAreaWithX:(int)x Y:(int)y;
 
 //坐标转换,这里暂时不支持旋转和对称换算的叠加
-+(MIPosition*)ConvertPositionWithConversion:(MIConversion)conversion Position:(MIPosition*)position inverse:(BOOL)inverse;
-//使用给定的转换方式的逆运算进行转换
-+(MIPosition*)inverseConvertWithConversion:(MIConversion)conversion Position:(MIPosition*)position;
++(MIPosition*)convertWithConversion:(MIConversion*)conversion Position:(MIPosition*)position inverse:(BOOL)inverse;
++(MIPosition*)convertWithConversion:(MIConversion*)conversion X:(int)x Y:(int)y inverse:(BOOL)inverse;
 
 +(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position;
 

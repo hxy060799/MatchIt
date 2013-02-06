@@ -9,6 +9,37 @@
 #import "MIPositionConvert.h"
 #import "MIConfig.h"
 
+@implementation MIConversion
+@synthesize flip;
+@synthesize spin;
+
+-(id)init{
+    if(self=[super init]){
+        self.flip=MIFlipNone;
+        self.spin=MISpinNone;
+    }
+    return self;
+}
+
++(id)conversion{
+    return [[[self alloc]init]autorelease];
+}
+
+-(id)initWithFlip:(MIConversionFlip)flip_ Spin:(MIConversionSpin)spin_{
+    if(self=[super init]){
+        self.flip=flip_;
+        self.spin=spin_;
+    }
+    return self;
+}
+
++(id)conversionWithFlip:(MIConversionFlip)flip_ Spin:(MIConversionSpin)spin_{
+    return [[[self alloc]initWithFlip:flip_ Spin:spin_]autorelease];
+}
+
+@end
+
+
 @implementation MIPosition
 
 @synthesize x;
@@ -70,33 +101,45 @@
     return [MIPosition positionWithX:-position.x+BLOCKS_XCOUNT-1 Y:position.y];
 }
 
-+(MIPosition*)ConvertPositionWithConversion:(MIConversion)conversion Position:(MIPosition*)position inverse:(BOOL)inverse{
++(MIPosition*)convertWithConversion:(MIConversion*)conversion Position:(MIPosition*)position inverse:(BOOL)inverse{
     //头两种:对称变换,逆运算和本身运算相同
-    if(conversion==MIConversionHorizontalFlip){
-        return [MIPosition positionWithX:-position.x+BLOCKS_XCOUNT-1 Y:position.y];
-    }else if(conversion==MIConversionVerticalFlip){
-        return [MIPosition positionWithX:position.x Y:-position.y+BLOCKS_YCOUNT-1];
+    MIPosition *position_=[MIPosition positionWithX:position.x Y:position.y];
+    if(conversion.flip==MIFlipHorizontal){
+        position_.x=-position_.x+BLOCKS_XCOUNT-1;
+        position_.y=position_.y;
+    }else if(conversion.flip==MIFlipVertical){
+        position_.x=position_.x;
+        position_.y=-position_.y+BLOCKS_YCOUNT-1;
     }
     
-    if(conversion==MIConversionPlus180Degrees){
-        return [MIPosition positionWithX:BLOCKS_XCOUNT-position.x-1 Y:BLOCKS_YCOUNT-position.y-1];
+    if(conversion.spin==MISpin180Degrees){
+        position_.x=BLOCKS_XCOUNT-position_.x-1;
+        position_.y=BLOCKS_YCOUNT-position_.y-1;
     }
     
     //很重要,执行90度旋转变化之前如果是逆运算，就必须将它宽和高互换.
     if(!inverse){
-        if(conversion==MIConversionPlus90Degrees){
-            return [MIPosition positionWithX:position.y Y:-position.x+BLOCKS_YCOUNT-1];
-        }else if(conversion==MIConversionMinus90Degrees){
-            return [MIPosition positionWithX:-position.y+BLOCKS_YCOUNT-1 Y:position.x];
+        if(conversion.spin==MISpinPlus90Degrees){
+            position_.x=position_.y;
+            position_.y=-position_.x+BLOCKS_YCOUNT-1;
+        }else if(conversion.spin==MISpinMinus90Degrees){
+            position_.x=-position_.y+BLOCKS_YCOUNT-1;
+            position_.y=position_.x;
         }
     }else{
-        if(conversion==MIConversionPlus90Degrees){
-            return [MIPosition positionWithX:-position.y+BLOCKS_YCOUNT-1 Y:position.x];
-        }else if(conversion==MIConversionMinus90Degrees){
-            return [MIPosition positionWithX:position.y Y:-position.x+BLOCKS_YCOUNT-1];
+        if(conversion.spin==MISpinPlus90Degrees){
+            position_.x=-position_.y+BLOCKS_YCOUNT-1;
+            position_.y=position_.x;
+        }else if(conversion.spin==MISpinMinus90Degrees){
+            position_.x=position_.y;
+            position_.y=-position_.x+BLOCKS_YCOUNT-1;
         }
     }
-    return [MIPosition positionWithX:position.x Y:position.y];
+    return position_;
+}
+
++(MIPosition*)convertWithConversion:(MIConversion *)conversion X:(int)x Y:(int)y inverse:(BOOL)inverse{
+    return [MIPositionConvert convertWithConversion:conversion Position:[MIPosition positionWithX:x Y:y] inverse:YES];
 }
 
 @end
