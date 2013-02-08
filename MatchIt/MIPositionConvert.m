@@ -99,7 +99,7 @@
         return NO;
     }
     return YES;
-
+    
 }
 
 +(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position{
@@ -107,20 +107,25 @@
 }
 
 +(MIPosition*)convertWithConversion:(MIConversion*)conversion Position:(MIPosition*)position inverse:(BOOL)inverse{
-    //头两种:对称变换,逆运算和本身运算相同
+    /*
+     #非常重要的地方#
+     
+     **坐标转换的时候，顺转换先翻转再旋转，逆转换先旋转再翻转。**
+    */
+    
     MIPosition *position_=[MIPosition positionWithX:position.x Y:position.y];
-    if(conversion.flip==MIFlipHorizontal){
-        [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
-    }else if(conversion.flip==MIFlipVertical){
-        [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
-    }
-    
-    if(conversion.spin==MISpin180Degrees){
-        [position_ setX:BLOCKS_XCOUNT-position_.x-1 Y:BLOCKS_YCOUNT-position_.y-1];
-    }
-    
-    //很重要,执行90度旋转变化之前如果是逆运算，就必须将它宽和高互换.
     if(!inverse){
+        //头两种:对称变换,逆运算和本身运算相同
+        if(conversion.flip==MIFlipHorizontal){
+            [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
+        }else if(conversion.flip==MIFlipVertical){
+            [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
+        }
+        
+        if(conversion.spin==MISpin180Degrees){
+            [position_ setX:BLOCKS_XCOUNT-position_.x-1 Y:BLOCKS_YCOUNT-position_.y-1];
+        }
+        
         if(conversion.spin==MISpinPlus90Degrees){
             [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
         }else if(conversion.spin==MISpinMinus90Degrees){
@@ -131,6 +136,16 @@
             [position_ setX:-position_.y+BLOCKS_YCOUNT-1 Y:position_.x];
         }else if(conversion.spin==MISpinMinus90Degrees){
             [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
+        }
+        
+        if(conversion.spin==MISpin180Degrees){
+            [position_ setX:BLOCKS_XCOUNT-position_.x-1 Y:BLOCKS_YCOUNT-position_.y-1];
+        }
+        
+        if(conversion.flip==MIFlipHorizontal){
+            [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
+        }else if(conversion.flip==MIFlipVertical){
+            [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
         }
     }
     return position_;
@@ -147,6 +162,21 @@
         [result addObject:position_];
     }
     return result;
+}
+
++(int)heightWithConversion:(MIConversion*)conversion{
+    if(conversion.spin==MISpinPlus90Degrees||conversion.spin==MISpinMinus90Degrees){
+        return BLOCKS_XCOUNT;
+    }else{
+        return BLOCKS_YCOUNT;
+    }
+}
++(int)widthWithConversion:(MIConversion*)conversion{
+    if(conversion.spin==MISpinPlus90Degrees||conversion.spin==MISpinMinus90Degrees){
+        return BLOCKS_YCOUNT;
+    }else{
+        return BLOCKS_XCOUNT;
+    }
 }
 
 @end

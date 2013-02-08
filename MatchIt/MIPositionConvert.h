@@ -80,6 +80,8 @@ typedef enum{
 +(MIPosition*)convertWithConversion:(MIConversion*)conversion Position:(MIPosition*)position inverse:(BOOL)inverse;
 +(NSMutableArray*)convertWithConversion:(MIConversion*)conversion Positions:(NSMutableArray*)positions inverse:(BOOL)inverse;
 +(MIPosition*)convertWithConversion:(MIConversion*)conversion X:(int)x Y:(int)y inverse:(BOOL)inverse;
++(int)heightWithConversion:(MIConversion*)conversion;
++(int)widthWithConversion:(MIConversion*)conversion;
 
 +(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position;
 
