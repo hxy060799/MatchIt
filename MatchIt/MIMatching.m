@@ -30,21 +30,21 @@
         return result;
     }
      */
-    /*
+    
     //1
-    MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:MIConversionNone];
+    MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
     if(route!=nil){
         [result setObject:route forKey:@"Route"];
         return result;
     }
-    route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:MIConversionMinus90Degrees];
+    route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinPlus90Degrees]];
     if(route!=nil){
         [result setObject:route forKey:@"Route"];
         return result;
     }
-    */
+    
     //2
-    MIRoute *route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
+    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
     if(route!=nil){
         [result setObject:route forKey:@"Route"];
         return result;
@@ -59,7 +59,7 @@
         [result setObject:route forKey:@"Route"];
         return result;
     }
-        route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpin180Degrees]];
+    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpin180Degrees]];
     if(route!=nil){
         [result setObject:route forKey:@"Route"];
         return result;
@@ -102,24 +102,15 @@
     return result;
 }
 
-/*
- #连连看判断步骤简述#
- 
-*/
-
-
 +(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
-    BOOL isMatched=NO;
     
-    //返回结果的时候,需要使用没有转换过的点
-    MIPosition *blockA_=[MIPosition positionWithX:blockA.x Y:blockA.y];
-    MIPosition *blockB_=[MIPosition positionWithX:blockB.x Y:blockB.y];
+    BOOL isMatched=YES;
     
     blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
     blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
     
     if(blockA.y==blockB.y){
-        isMatched=YES;
+        
         //横着
         if(blockA.x>blockB.x){
             MIPosition *positionTemp=blockB;
@@ -128,38 +119,47 @@
         }
         
         for(int i=blockA.x+1;i<blockB.x;i++){
-            MIPosition *position=[MIPosition positionWithX:i Y:blockA.y];
-            position=[MIPositionConvert convertWithConversion:conversion Position:position inverse:YES];
+            MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
                 break;
             }
         }
-    }
     
-    if(isMatched){
-        return [MIRoute routeWithRouteVertexes:[NSMutableArray arrayWithObjects:blockA_,blockB_,nil]];
+        if(isMatched==YES){
+            NSMutableArray *routeVertexes=[NSMutableArray array];
+            
+            [routeVertexes addObject:blockA];
+            [routeVertexes addObject:blockB];
+            
+            routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
+            
+            return [MIRoute routeWithRouteVertexes:routeVertexes];
+        }else{
+            return nil;
+        }
+        
+    }else{
+        return nil;
     }
-    
-    return nil;
 }
 
 +(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
-    BOOL isMatched=NO;
+    
+    BOOL isMatched=YES;
     
     blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
     blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
-    
+
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)){
-        isMatched=YES;
-        //方块A在左上
+        //让方块A在左上
         if(blockA.x>blockB.x && blockA.y<blockB.y){
             MIPosition *positionTemp=blockB;
             blockB=blockA;
             blockA=positionTemp;
         }
         
-        //先右后下
+    	//向右
         for(int i=blockA.x+1;i<=blockB.x;i++){
             MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
@@ -167,7 +167,7 @@
                 break;
             }
         }
-        
+        //向下
         for(int i=blockA.y-1;i>blockB.y;i--){
             MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
@@ -186,9 +186,14 @@
             routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
             
             return [MIRoute routeWithRouteVertexes:routeVertexes];
+        }else{
+            return nil;
         }
+        
+    }else{
+        return nil;
     }
-    return nil;
+    
 }
 
 +(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion HorizontalFlip:(BOOL)flip{

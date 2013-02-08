@@ -59,6 +59,11 @@
     return [[[MIPosition alloc]initWithX:x_ Y:y_]autorelease];
 }
 
+-(void)setX:(int)x_ Y:(int)y_{
+    self.x=x_;
+    self.y=y_;
+}
+
 @end
 
 @implementation MIPositionConvert
@@ -105,34 +110,27 @@
     //头两种:对称变换,逆运算和本身运算相同
     MIPosition *position_=[MIPosition positionWithX:position.x Y:position.y];
     if(conversion.flip==MIFlipHorizontal){
-        position_.x=-position_.x+BLOCKS_XCOUNT-1;
-        position_.y=position_.y;
+        [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
     }else if(conversion.flip==MIFlipVertical){
-        position_.x=position_.x;
-        position_.y=-position_.y+BLOCKS_YCOUNT-1;
+        [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
     }
     
     if(conversion.spin==MISpin180Degrees){
-        position_.x=BLOCKS_XCOUNT-position_.x-1;
-        position_.y=BLOCKS_YCOUNT-position_.y-1;
+        [position_ setX:BLOCKS_XCOUNT-position_.x-1 Y:BLOCKS_YCOUNT-position_.y-1];
     }
     
     //很重要,执行90度旋转变化之前如果是逆运算，就必须将它宽和高互换.
     if(!inverse){
         if(conversion.spin==MISpinPlus90Degrees){
-            position_.x=position_.y;
-            position_.y=-position_.x+BLOCKS_YCOUNT-1;
+            [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
         }else if(conversion.spin==MISpinMinus90Degrees){
-            position_.x=-position_.y+BLOCKS_YCOUNT-1;
-            position_.y=position_.x;
+            [position_ setX:-position_.y+BLOCKS_YCOUNT-1 Y:position_.x];
         }
     }else{
         if(conversion.spin==MISpinPlus90Degrees){
-            position_.x=-position_.y+BLOCKS_YCOUNT-1;
-            position_.y=position_.x;
+            [position_ setX:-position_.y+BLOCKS_YCOUNT-1 Y:position_.x];
         }else if(conversion.spin==MISpinMinus90Degrees){
-            position_.x=position_.y;
-            position_.y=-position_.x+BLOCKS_YCOUNT-1;
+            [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
         }
     }
     return position_;

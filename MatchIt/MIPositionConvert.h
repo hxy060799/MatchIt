@@ -62,6 +62,7 @@ typedef enum{
 
 -(id)initWithX:(int)x_ Y:(int)y_;
 +(id)positionWithX:(int)x_ Y:(int)y_;
+-(void)setX:(int)x_ Y:(int)y_;
 
 @end
 
