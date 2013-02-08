@@ -142,4 +142,13 @@
     return [MIPositionConvert convertWithConversion:conversion Position:[MIPosition positionWithX:x Y:y] inverse:YES];
 }
 
++(NSMutableArray*)convertWithConversion:(MIConversion*)conversion Positions:(NSMutableArray*)positions inverse:(BOOL)inverse{
+    NSMutableArray *result=[NSMutableArray array];
+    for(MIPosition *position in positions){
+        MIPosition *position_=[MIPositionConvert convertWithConversion:conversion Position:position inverse:inverse];
+        [result addObject:position_];
+    }
+    return result;
+}
+
 @end

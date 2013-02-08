@@ -77,6 +77,7 @@ typedef enum{
 
 //坐标转换,这里暂时不支持旋转和对称换算的叠加
 +(MIPosition*)convertWithConversion:(MIConversion*)conversion Position:(MIPosition*)position inverse:(BOOL)inverse;
++(NSMutableArray*)convertWithConversion:(MIConversion*)conversion Positions:(NSMutableArray*)positions inverse:(BOOL)inverse;
 +(MIPosition*)convertWithConversion:(MIConversion*)conversion X:(int)x Y:(int)y inverse:(BOOL)inverse;
 
 +(MIPosition*)horizontalFlipWithPosition:(MIPosition*)position;

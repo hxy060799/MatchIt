@@ -102,6 +102,12 @@
     return result;
 }
 
+/*
+ #连连看判断步骤简述#
+ 
+*/
+
+
 +(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     BOOL isMatched=NO;
     
@@ -173,14 +179,11 @@
         if(isMatched==YES){
             NSMutableArray *routeVertexes=[NSMutableArray array];
             
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:YES];
-            [routeVertexes addObject:position];
+            [routeVertexes addObject:blockA];
+            [routeVertexes addObject:[MIPosition positionWithX:blockB.x Y:blockA.y]];
+            [routeVertexes addObject:blockB];
             
-            MIPosition *position2=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:blockA.y inverse:YES];
-            [routeVertexes addObject:position2];
-            
-            MIPosition *position3=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:YES];
-            [routeVertexes addObject:position3];
+            routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
             
             return [MIRoute routeWithRouteVertexes:routeVertexes];
         }
