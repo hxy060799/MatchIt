@@ -17,108 +17,45 @@
 +(NSMutableDictionary*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
     NSMutableDictionary *result=[NSMutableDictionary dictionary];
     [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
-    
-    //1
-    MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
+    //A
+    for(int i=0;i<=2;i+=2){
+        MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:i]];
+        if(route!=nil){
+            [result setObject:route forKey:@"Route"];
+            return result;
+        }
     }
-    route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinPlus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
+    //B
+    for(int i=0;i<=1;i++){
+        for(int j=0;j<=1;j++){
+            MIRoute *route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(route!=nil){
+                [result setObject:route forKey:@"Route"];
+                return result;
+            }
+        }
     }
-    
-    //2
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpin180Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpin180Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    
     //C
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
+    for(int i=0;i<=1;i++){
+        for(int j=0;j<4;j++){
+            MIRoute *route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(route!=nil){
+                [result setObject:route forKey:@"Route"];
+                return result;
+            }
+        }
     }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpin180Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinMinus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinPlus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipVertical Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinMinus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinPlus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    
     //D
-    route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
+    for(int i=0;i<=1;i++){
+        for(int j=0;j<=2;j+=2){
+            MIRoute *route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(route!=nil){
+                [result setObject:route forKey:@"Route"];
+                return result;
+            }
+        }
     }
-    route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinPlus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    
-    route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipHorizontal Spin:MISpinNone]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:MISpinPlus90Degrees]];
-    if(route!=nil){
-        [result setObject:route forKey:@"Route"];
-        return result;
-    }
-    
-    
+      
     [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
     
     return result;
@@ -338,14 +275,6 @@
         return nil;
     }else{
         return NO;
-    }
-}
-
-+(MIPosition*)flipBlockWithPosition:(MIPosition*)position Flip:(BOOL)flip{
-    if(flip){
-        return [MIPositionConvert horizontalFlipWithPosition:[MIPosition positionWithX:position.x Y:position.y]];
-    }else{
-        return position;
     }
 }
 

@@ -27,6 +27,4 @@
 
 +(MIRoute*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion;
 
-+(MIPosition*)flipBlockWithPosition:(MIPosition*)position Flip:(BOOL)flip;
-
 @end

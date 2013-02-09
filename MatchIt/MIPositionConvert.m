@@ -118,8 +118,6 @@
         //头两种:对称变换,逆运算和本身运算相同
         if(conversion.flip==MIFlipHorizontal){
             [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
-        }else if(conversion.flip==MIFlipVertical){
-            [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
         }
         
         if(conversion.spin==MISpin180Degrees){
@@ -144,8 +142,6 @@
         
         if(conversion.flip==MIFlipHorizontal){
             [position_ setX:-position_.x+BLOCKS_XCOUNT-1 Y:position_.y];
-        }else if(conversion.flip==MIFlipVertical){
-            [position_ setX:position_.x Y:-position_.y+BLOCKS_YCOUNT-1];
         }
     }
     return position_;

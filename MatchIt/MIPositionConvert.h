@@ -22,15 +22,14 @@ typedef enum{
 //基础坐标转换
 typedef enum{
     MIFlipNone,
-    MIFlipHorizontal,
-    MIFlipVertical
+    MIFlipHorizontal
 }MIConversionFlip;
 
 typedef enum{
     MISpinNone,
+    MISpin180Degrees,
     MISpinPlus90Degrees,
-    MISpinMinus90Degrees,
-    MISpin180Degrees
+    MISpinMinus90Degrees
 }MIConversionSpin;
 
 @interface MIConversion : NSObject{
