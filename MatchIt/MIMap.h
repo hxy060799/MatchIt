@@ -22,5 +22,6 @@
 -(int)blockAtX:(int)x Y:(int)y;
 -(NSString*)imageNameWithImgId:(int)imgId;
 -(NSString*)imageNameAtX:(int)x Y:(int)y;
+-(void)loadMapWithTemplateIndex:(int)index;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MIMap.h"
+#import "MIPositionConvert.h"
 
 @interface MIMap ()
 -(NSMutableDictionary*)readPlistWithPlistName:(NSString*)plistName;
@@ -19,8 +20,7 @@
 
 -(id)init{
     if(self=[super init]){
-        NSMutableArray *mapArray=[[self readPlistWithPlistName:@"MatchItMap"]objectForKey:@"MatchItMap"];
-        self.map=[[NSMutableArray alloc]initWithArray:mapArray];
+        [self loadMapWithTemplateIndex:10];
         
         NSMutableArray *infArray=[[self readPlistWithPlistName:@"BlockInformation"]objectForKey:@"BlockInformation"];
         self.blockInformation=[[NSMutableArray alloc]initWithArray:infArray];
@@ -30,11 +30,12 @@
 
 -(void)dealloc{
     [map release];
+    [blockInformation release];
     [super dealloc];
 }
 
 -(int)blockAtX:(int)x Y:(int)y{
-    return [[[[map objectAtIndex:10]objectAtIndex:y]objectAtIndex:x]intValue];
+    return [[[map objectAtIndex:y]objectAtIndex:x]intValue];
 }
 
 -(NSString*)imageNameWithImgId:(int)imgId{
@@ -55,4 +56,56 @@
     dict=(NSMutableDictionary*)[NSPropertyListSerialization propertyListFromData:plistXML mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&error];
     return dict;
 }
+
+-(void)loadMapWithTemplateIndex:(int)index{
+    NSArray *mapTemplate=[[[self readPlistWithPlistName:@"MatchItMap"]objectForKey:@"MatchItMap"]objectAtIndex:index];
+    NSMutableArray *templateBlocks=[NSMutableArray array];
+    for(int i=0;i<[mapTemplate count];i++){
+        for(int j=0;j<[[mapTemplate objectAtIndex:i]count];j++){
+            if([[[mapTemplate objectAtIndex:i]objectAtIndex:j]intValue]==1){
+                MIPosition *blockPosition=[MIPosition positionWithX:i Y:j];
+                [templateBlocks addObject:blockPosition];
+            }
+        }
+    }
+    
+    if([templateBlocks count]%2==1){
+        NSLog(@"There is something wrong with the map template.");
+        return;
+    }
+    
+    int numbers[templateBlocks.count];
+    BOOL ok=true;
+    for(int i=0;i<templateBlocks.count;i++){
+        ok=false;
+        while (ok!=true) {
+            ok=true;
+            numbers[i]=arc4random()%templateBlocks.count; 
+            for(int j=0;j<i;j++){
+                if(numbers[j]==numbers[i]){
+                    ok=false;
+                }
+            }
+        }
+    }
+    
+    NSMutableArray *templateBlocks_=[NSMutableArray array];
+    for(int i=0;i<templateBlocks.count;i++){
+        NSLog(@"%i",numbers[i]);
+        [templateBlocks_ addObject:[templateBlocks objectAtIndex:numbers[i]]];
+    }
+    
+    self.map=[[NSMutableArray alloc]initWithArray:mapTemplate];
+    
+    for(int i=0;i<templateBlocks_.count;i+=2){
+        MIPosition *thisBlock=[templateBlocks_ objectAtIndex:i];
+        MIPosition *nextBlock=[templateBlocks_ objectAtIndex:i+1];
+        int blockInf=1+arc4random()%5;
+        //0~(x-1)
+        [[map objectAtIndex:thisBlock.x]setObject:[NSNumber numberWithInt:blockInf]atIndex:thisBlock.y];
+        [[map objectAtIndex:nextBlock.x]setObject:[NSNumber numberWithInt:blockInf]atIndex:nextBlock.y];
+    }
+    
+}
+
 @end

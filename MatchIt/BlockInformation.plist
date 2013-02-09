@@ -12,9 +12,33 @@
 		</dict>
 		<dict>
 			<key>ImageName</key>
-			<string>Block_Red.png</string>
+			<string>Block_1.png</string>
 			<key>Description</key>
-			<string>普通方块</string>
+			<string>方块1</string>
+		</dict>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_2.png</string>
+			<key>Description</key>
+			<string>方块2</string>
+		</dict>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_3.png</string>
+			<key>Description</key>
+			<string>方块3</string>
+		</dict>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_4.png</string>
+			<key>Description</key>
+			<string>方块4</string>
+		</dict>
+		<dict>
+			<key>ImageName</key>
+			<string>Block_5.png</string>
+			<key>Description</key>
+			<string>方块5</string>
 		</dict>
 	</array>
 </dict>
