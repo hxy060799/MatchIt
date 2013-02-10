@@ -25,6 +25,8 @@
 
 @synthesize delegate;
 
+NSMutableArray *selectedSprites;
+
 #pragma mark - init
 
 -(id)init{
@@ -33,6 +35,7 @@
         blocks=[[NSMutableArray alloc]init];
         selectedBlocks=[[NSMutableArray alloc]init];
         blocksLayer=[[[CCLayerTouch alloc]init]autorelease];
+        selectedSprites=[[NSMutableArray alloc]init];
         
         blocksLayer.isTouchEnabled=YES;
         blocksLayer.delegete=self;
@@ -71,6 +74,7 @@
             aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
             [blocksLayer addChild:aBlock.blockRouteSprite z:1];
+            
         }
         
     }
@@ -101,6 +105,7 @@
     [super dealloc];
     [blocks release];
     [selectedBlocks release];
+    [selectedSprites release];
 }
 
 #pragma mark - CCLayerTouchDelegate
@@ -122,52 +127,58 @@
 
 #pragma mark - MIBlockDelegate
 
--(void)blockBeingSelected:(MIBlock *)block Index:(int)blockIndex NowSelected:(BOOL)selected{
-    MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:blockIndex];
+-(void)blockBeingSelectedWithIndex:(int)blockIndex{
+    MIBlock *block=[self blockAtIndex:blockIndex];
+    MIPosition *blockPosition=block.blockPosition;
     //先判断这个方块是不是空的
-    if(true/*[map blockAtX:blockPosition.x Y:blockPosition.y]!=0*/){
+    if([map blockAtX:blockPosition.x Y:blockPosition.y]!=0){
         //被选中的加入到数组,被取消选中的从数组中移除
-        if(selected==YES){
-            [block setBlockSpriteFrameWithFileName:@"Block_Blue.png"];
-            [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
-            
-            if([selectedBlocks count]==2){
-                /*
-                NSMutableArray *array=[NSMutableArray array];
-                for(int i=0;i<[selectedBlocks count];i++){
-                    MIPosition *position=[self blockAtIndex:[[selectedBlocks objectAtIndex:i]intValue]].blockPosition;
-                    [array addObject:position];
-                    MIRoute *route=[MIRoute routeWithRouteVertexes:array];
-                    [route parseVerteses];
-                    [MIRoute drawRouteWithRoute:route manager:self];
+        if(block.selected==NO){
+            if(selectedBlocks.count==0){
+                [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
+                
+                CCSprite *sprite=[CCSprite spriteWithSpriteFrameName:@"Selected.png"];
+                sprite.anchorPoint=ccp(0,0);
+                sprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+                [blocksLayer addChild:sprite z:2];
+                [selectedSprites addObject:sprite];
+                
+                block.selected=YES;
+            }else if([selectedBlocks count]==1){
+                MIBlock *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]];
+                MIPosition *blockPositionA=blockA.blockPosition;
+                MIPosition *blockB=blockPosition;
+                [self blockBeingSelectedWithIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
+                
+                if([map blockAtX:blockPositionA.x Y:blockPositionA.y]==[map blockAtX:blockB.x Y:blockB.y]){
+                    NSMutableDictionary *matchResult=[MIMatching isMatchingWithA:blockPositionA B:blockB Map:map];
+                    if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
+                        MIRoute *route=[matchResult objectForKey:@"Route"];
+                        [route parseVerteses];
+                        [MIRoute drawRouteWithRoute:route manager:self];
+                        
+                    }else{
+                        NSLog(@"Not Matched");
+                    }
                 }
-                */
-                
-                MIPosition *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]].blockPosition;
-                MIPosition *blockB=[self blockAtIndex:[[selectedBlocks objectAtIndex:1]intValue]].blockPosition;
-                
-                NSMutableDictionary *matchResult=[MIMatching isMatchingWithA:blockA B:blockB Map:map];
-                if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
-                     MIRoute *route=[matchResult objectForKey:@"Route"];
-                    [route parseVerteses];
-                    [MIRoute drawRouteWithRoute:route manager:self];
-                }else{
-                    NSLog(@"Not Matched");
-                }
-                
+                CCParticleSystem *system;
+                system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+                system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
+                [blocksLayer addChild:system z:100];
             }
-            
         }else{
-            [block setBlockSpriteFrameWithFileName:@"Block_Red.png"];
             for(int i=0;i<[selectedBlocks count];i++){
                 NSNumber *selectedIndex=[selectedBlocks objectAtIndex:i];
                 if([selectedIndex intValue]==blockIndex){
-                    [selectedBlocks removeObject:selectedIndex];
+                    [selectedBlocks removeObjectAtIndex:i];
+                    [[selectedSprites objectAtIndex:i]removeFromParentAndCleanup:YES];
+                    [selectedSprites removeObjectAtIndex:i];
+                    block.selected=NO;
                 }
             }
         }
         if(delegate){
-            [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,selected,[selectedBlocks count]]];
+            [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,block.selected,[selectedBlocks count]]];
         }
     }
 }

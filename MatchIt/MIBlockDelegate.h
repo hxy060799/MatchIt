@@ -12,6 +12,6 @@
 
 @protocol MIBlockDelegate <NSObject>
 
--(void)blockBeingSelected:(MIBlock*)block Index:(int)blockIndex NowSelected:(BOOL)selected;
+-(void)blockBeingSelectedWithIndex:(int)blockIndex;
 
 @end

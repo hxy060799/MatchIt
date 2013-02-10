@@ -67,9 +67,8 @@
 
 
 -(void)blockBeingSelected{
-    self.selected=!self.selected;
     if(delegate){
-        [delegate blockBeingSelected:self Index:[MIPositionConvert positionToIndexWithX:blockPosition.x y:blockPosition.y] NowSelected:self.selected];
+        [delegate blockBeingSelectedWithIndex:[MIPositionConvert positionToIndexWithX:blockPosition.x y:blockPosition.y]];
     }
 }
 

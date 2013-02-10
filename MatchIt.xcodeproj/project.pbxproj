@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A903E7E116BE7DAF00FB341A /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A903E7DF16BE7DAF00FB341A /* BasicImage.plist */; };
-		A903E7E216BE7DAF00FB341A /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A903E7E016BE7DAF00FB341A /* BasicImage.png */; };
 		A93A6FB516BCC3AA008B0ED1 /* MIMatching.m in Sources */ = {isa = PBXBuildFile; fileRef = A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */; };
 		A93A6FB916BCC3B0008B0ED1 /* MIRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = A93A6FB816BCC3B0008B0ED1 /* MIRoute.m */; };
 		A95EA83216B74DD000AB38E9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95EA83116B74DD000AB38E9 /* QuartzCore.framework */; };
@@ -141,14 +139,16 @@
 		A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */; };
 		A9EF455C16B7D98D0037631A /* MIBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455216B7D98D0037631A /* MIBlock.m */; };
 		A9EF455D16B7D98D0037631A /* MIBlockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455516B7D98D0037631A /* MIBlockManager.m */; };
+		A9F19ED716C78368006D28A1 /* star副本.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F19ED516C78368006D28A1 /* star副本.png */; };
+		A9F19EDF16C78877006D28A1 /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9F19EDD16C78877006D28A1 /* BasicImage.plist */; };
+		A9F19EE016C78877006D28A1 /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F19EDE16C78877006D28A1 /* BasicImage.png */; };
+		A9F19EE216C78CF9006D28A1 /* POPBlock.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9F19EE116C78CF9006D28A1 /* POPBlock.plist */; };
 		A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBAED416BDF87600F1C541 /* MIMap.m */; };
 		A9FBAED816BDFB2100F1C541 /* MatchItMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */; };
 		A9FBAEDA16BDFEBD00F1C541 /* BlockInformation.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A903E7DF16BE7DAF00FB341A /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
-		A903E7E016BE7DAF00FB341A /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
 		A93A6FB316BCC3AA008B0ED1 /* MIMatching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMatching.h; sourceTree = "<group>"; };
 		A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMatching.m; sourceTree = "<group>"; };
 		A93A6FB716BCC3B0008B0ED1 /* MIRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIRoute.h; sourceTree = "<group>"; };
@@ -427,6 +427,10 @@
 		A9EF455516B7D98D0037631A /* MIBlockManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIBlockManager.m; sourceTree = "<group>"; };
 		A9EF455616B7D98D0037631A /* MIBlockManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlockManagerDelegate.h; sourceTree = "<group>"; };
 		A9EF455716B7D98D0037631A /* MIConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIConfig.h; sourceTree = "<group>"; };
+		A9F19ED516C78368006D28A1 /* star副本.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star副本.png"; sourceTree = "<group>"; };
+		A9F19EDD16C78877006D28A1 /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
+		A9F19EDE16C78877006D28A1 /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
+		A9F19EE116C78CF9006D28A1 /* POPBlock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = POPBlock.plist; sourceTree = "<group>"; };
 		A9FBAED316BDF87600F1C541 /* MIMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMap.h; sourceTree = "<group>"; };
 		A9FBAED416BDF87600F1C541 /* MIMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMap.m; sourceTree = "<group>"; };
 		A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MatchItMap.plist; sourceTree = "<group>"; };
@@ -507,10 +511,12 @@
 		A95EA84416B74DD000AB38E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9F19EE116C78CF9006D28A1 /* POPBlock.plist */,
+				A9F19ED516C78368006D28A1 /* star副本.png */,
 				A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */,
 				A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */,
-				A903E7DF16BE7DAF00FB341A /* BasicImage.plist */,
-				A903E7E016BE7DAF00FB341A /* BasicImage.png */,
+				A9F19EDD16C78877006D28A1 /* BasicImage.plist */,
+				A9F19EDE16C78877006D28A1 /* BasicImage.png */,
 				A95EA84516B74DD000AB38E9 /* Default.png */,
 				A95EA84716B74DD000AB38E9 /* Default-Landscape~ipad.png */,
 				A95EA84916B74DD000AB38E9 /* fps_images.png */,
@@ -968,8 +974,10 @@
 				A95EA99B16B74DD100AB38E9 /* ChangeLog in Resources */,
 				A9FBAED816BDFB2100F1C541 /* MatchItMap.plist in Resources */,
 				A9FBAEDA16BDFEBD00F1C541 /* BlockInformation.plist in Resources */,
-				A903E7E116BE7DAF00FB341A /* BasicImage.plist in Resources */,
-				A903E7E216BE7DAF00FB341A /* BasicImage.png in Resources */,
+				A9F19ED716C78368006D28A1 /* star副本.png in Resources */,
+				A9F19EDF16C78877006D28A1 /* BasicImage.plist in Resources */,
+				A9F19EE016C78877006D28A1 /* BasicImage.png in Resources */,
+				A9F19EE216C78CF9006D28A1 /* POPBlock.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

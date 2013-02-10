@@ -15,7 +15,7 @@
 
 @interface MIBlock : NSObject{
     CCSprite *blockSprite;
-    CCSprite *blockRouteSprite;
+    CCSprite *blockSelectedSprite;
     
     BOOL selected;
     
