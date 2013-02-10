@@ -38,6 +38,10 @@
     return [[[map objectAtIndex:y]objectAtIndex:x]intValue];
 }
 
+-(void)setBlockAtX:(int)x Y:(int)y block:(int)block{
+    [[map objectAtIndex:y]setObject:[NSNumber numberWithInt:block] atIndex:x];
+}
+
 -(NSString*)imageNameWithImgId:(int)imgId{
     return [[blockInformation objectAtIndex:imgId]objectForKey:@"ImageName"];
 }

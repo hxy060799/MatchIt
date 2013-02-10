@@ -32,6 +32,8 @@ NSMutableArray *selectedSprites;
 -(id)init{
     if(self=[super init]){
         
+        [self preloadParticleEffect];
+        
         blocks=[[NSMutableArray alloc]init];
         selectedBlocks=[[NSMutableArray alloc]init];
         blocksLayer=[[[CCLayerTouch alloc]init]autorelease];
@@ -99,6 +101,12 @@ NSMutableArray *selectedSprites;
     return [self blockAtIndex:[MIPositionConvert positionToIndexWithX:position.x y:position.y]];
 }
 
+-(void)removeBlockAtIndex:(int)index{
+    MIPosition *position=[MIPositionConvert indexToPositonWithIndex:index];
+    [map setBlockAtX:position.x Y:position.y block:0];
+    [[self blockAtIndex:index] setBlockSpriteFrameWithFileName:[map imageNameWithImgId:0]];
+}
+
 #pragma mark - Memory Management
 
 -(void)dealloc{
@@ -157,14 +165,17 @@ NSMutableArray *selectedSprites;
                         [route parseVerteses];
                         [MIRoute drawRouteWithRoute:route manager:self];
                         
+                        CCParticleSystem *system;
+                        system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+                        system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
+                        [blocksLayer addChild:system z:100];
+                        
+                        [self removeBlockAtIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
+                        [self removeBlockAtIndex:blockIndex];
                     }else{
                         NSLog(@"Not Matched");
                     }
                 }
-                CCParticleSystem *system;
-                system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
-                system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
-                [blocksLayer addChild:system z:100];
             }
         }else{
             for(int i=0;i<[selectedBlocks count];i++){
@@ -181,6 +192,16 @@ NSMutableArray *selectedSprites;
             [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,block.selected,[selectedBlocks count]]];
         }
     }
+}
+
+-(void)preloadParticleEffect{
+    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+}
+
+-(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
+    /*
+
+     */
 }
 
 @end
