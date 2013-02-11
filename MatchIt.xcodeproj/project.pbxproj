@@ -136,6 +136,7 @@
 		A95EA9C016B74DD100AB38E9 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EA9BF16B74DD100AB38E9 /* GameLayer.m */; };
 		A95EA9C316B74DD100AB38E9 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EA9C216B74DD100AB38E9 /* IntroLayer.m */; };
 		A95EAB5F16B74F4D00AB38E9 /* CCLayerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EAB5D16B74F4D00AB38E9 /* CCLayerTouch.m */; };
+		A97BC10016C8A07100F7E7EC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A97BC0FF16C8A07100F7E7EC /* Default-568h@2x.png */; };
 		A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */; };
 		A9EF455C16B7D98D0037631A /* MIBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455216B7D98D0037631A /* MIBlock.m */; };
 		A9EF455D16B7D98D0037631A /* MIBlockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455516B7D98D0037631A /* MIBlockManager.m */; };
@@ -418,6 +419,7 @@
 		A95EAB5C16B74F4D00AB38E9 /* CCLayerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerTouch.h; sourceTree = "<group>"; };
 		A95EAB5D16B74F4D00AB38E9 /* CCLayerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayerTouch.m; sourceTree = "<group>"; };
 		A95EAB5E16B74F4D00AB38E9 /* CCLayerTouchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerTouchDelegate.h; sourceTree = "<group>"; };
+		A97BC0FF16C8A07100F7E7EC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A9B9CB9F16BCC5630038ECA1 /* MIPositionConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIPositionConvert.h; sourceTree = "<group>"; };
 		A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIPositionConvert.m; sourceTree = "<group>"; };
 		A9EF455116B7D98D0037631A /* MIBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlock.h; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 		A95EA82216B74DD000AB38E9 = {
 			isa = PBXGroup;
 			children = (
+				A97BC0FF16C8A07100F7E7EC /* Default-568h@2x.png */,
 				A95EA84316B74DD000AB38E9 /* MatchIt */,
 				A95EA83016B74DD000AB38E9 /* Frameworks */,
 				A95EA82E16B74DD000AB38E9 /* Products */,
@@ -935,7 +938,7 @@
 		A95EA82416B74DD000AB38E9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = A95EA82716B74DD000AB38E9 /* Build configuration list for PBXProject "MatchIt" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -978,6 +981,7 @@
 				A9F19EDF16C78877006D28A1 /* BasicImage.plist in Resources */,
 				A9F19EE016C78877006D28A1 /* BasicImage.png in Resources */,
 				A9F19EE216C78CF9006D28A1 /* POPBlock.plist in Resources */,
+				A97BC10016C8A07100F7E7EC /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,6 +1113,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1119,6 +1127,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
@@ -1130,6 +1139,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1138,6 +1151,7 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
