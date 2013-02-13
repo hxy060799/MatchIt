@@ -18,7 +18,6 @@
 @implementation MIBlockManager
 
 @synthesize blocks;
-@synthesize blocksLayer;
 @synthesize selectedBlocks;
 
 @synthesize map;
@@ -27,25 +26,27 @@
 
 NSMutableArray *selectedSprites;
 
+BOOL isPoping;
+
 #pragma mark - init
 
 -(id)init{
     if(self=[super init]){
         
+        isPoping=NO;
+        
         [self preloadParticleEffect];
         
         blocks=[[NSMutableArray alloc]init];
         selectedBlocks=[[NSMutableArray alloc]init];
-        blocksLayer=[[[CCLayerTouch alloc]init]autorelease];
         selectedSprites=[[NSMutableArray alloc]init];
         
-        blocksLayer.isTouchEnabled=YES;
-        blocksLayer.delegete=self;
+        self.isTouchEnabled=YES;
         
         map=[[MIMap alloc]init];
         
-        self.blocksLayer.anchorPoint=ccp(0,0);
-        self.blocksLayer.position=ccp(0,0);
+        self.anchorPoint=ccp(0,0);
+        self.position=ccp(0,0);
         
         
         [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"BasicImage.plist"];
@@ -70,12 +71,12 @@ NSMutableArray *selectedSprites;
             aBlock.blockSprite.anchorPoint=ccp(0,0);
             aBlock.blockSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
-            [blocksLayer addChild:aBlock.blockSprite z:0];
+            [self addChild:aBlock.blockSprite z:0];
             
             aBlock.blockRouteSprite.anchorPoint=ccp(0,0);
             aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
-            [blocksLayer addChild:aBlock.blockRouteSprite z:1];
+            [self addChild:aBlock.blockRouteSprite z:1];
             
         }
         
@@ -116,9 +117,9 @@ NSMutableArray *selectedSprites;
     [selectedSprites release];
 }
 
-#pragma mark - CCLayerTouchDelegate
+#pragma mark - CCLayerDelegate
 
--(void)ccLayerTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch=[touches anyObject];
     CGPoint touchPosition=[[CCDirector sharedDirector]convertToGL:[touch locationInView:[touch view]]];
     MIPosition *blockPosition=[MIPositionConvert screenToPositionWithX:touchPosition.x Y:touchPosition.y];
@@ -148,7 +149,7 @@ NSMutableArray *selectedSprites;
                 CCSprite *sprite=[CCSprite spriteWithSpriteFrameName:@"Selected.png"];
                 sprite.anchorPoint=ccp(0,0);
                 sprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
-                [blocksLayer addChild:sprite z:2];
+                [self addChild:sprite z:2];
                 [selectedSprites addObject:sprite];
                 
                 block.selected=YES;
@@ -165,13 +166,7 @@ NSMutableArray *selectedSprites;
                         [route parseVerteses];
                         [MIRoute drawRouteWithRoute:route manager:self];
                         
-                        CCParticleSystem *system;
-                        system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
-                        system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
-                        [blocksLayer addChild:system z:100];
-                        
-                        [self removeBlockAtIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
-                        [self removeBlockAtIndex:blockIndex];
+                        [self popBlockWithIndexA:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y] IndexB:blockIndex];
                     }else{
                         NSLog(@"Not Matched");
                     }
@@ -199,9 +194,36 @@ NSMutableArray *selectedSprites;
 }
 
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
-    /*
+    isPoping=YES;
+    
+    id delay=[CCDelayTime actionWithDuration:0.3];
+    id clearRoute=[CCCallFunc actionWithTarget:self selector:@selector(clearRoute)];
+    id popBlockA=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexA];}];
+    id popBlockB=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexB];}];
+    //[self removeBlockAtIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
+    //[self removeBlockAtIndex:blockIndex];
+    
+    
+    [self runAction:[CCSequence actions:delay,clearRoute,popBlockA,popBlockB,nil]];
+    
+}
 
-     */
+-(void)clearRoute{
+    for(MIBlock *block in blocks){
+        [block setBlockRouteSpriteFrameWithFileName:@"Block_None.png"];
+    }
+}
+
+-(void)showPOPParticleWithBlockIndex:(int)index{
+    //显示POP粒子效果的同时也移除方块
+    MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:index];
+    
+    [self removeBlockAtIndex:index];
+    
+    CCParticleSystem *system;
+    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+    system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
+    [self addChild:system z:100];
 }
 
 @end

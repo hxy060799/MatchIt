@@ -81,12 +81,10 @@ CCLabelTTF *welcomeLabel;
         
         blockManager.delegate=self;
         
-        [self addChild:(CCLayer*)blockManager.blocksLayer z:0];
-        
+        [self addChild:(CCLayer*)blockManager z:0];
     }
     return self;
 }
-
 -(void)traceWithString:(NSString *)string{
     [welcomeLabel setString:string];
 }

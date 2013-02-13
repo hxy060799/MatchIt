@@ -387,16 +387,12 @@
 #if __CC_PLATFORM_IOS
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
-	NSData *imageData;
+	NSData *imageData = nil;
 
 	if( format == kCCImageFormatPNG )
 		imageData = UIImagePNGRepresentation( image );
 
-	else if( format == kCCImageFormatJPEG )
-		imageData = UIImageJPEGRepresentation(image, 0.9f);
-
-	else
-		NSAssert(NO, @"Unsupported format");
+	else imageData = UIImageJPEGRepresentation(image, 0.9f);
 	
 	[image release];
 

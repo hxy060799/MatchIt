@@ -251,6 +251,19 @@
                 <key>sourceSize</key>
                 <string>{40,40}</string>
             </dict>
+            <key>Block_None.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{508,2},{0,0}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{0,0}}</string>
+                <key>sourceSize</key>
+                <string>{40,40}</string>
+            </dict>
             <key>Block_Pink.png</key>
             <dict>
                 <key>frame</key>
@@ -352,7 +365,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:67164be4c43507e949539f3b18b2a641$</string>
+            <string>$TexturePacker:SmartUpdate:52ff97ccf3fbb7e4a23d6571a89ddae2$</string>
             <key>textureFileName</key>
             <string>BasicImage.png</string>
         </dict>

@@ -16,10 +16,8 @@
 
 @protocol MIBlockManagerDelegate;
 
-@interface MIBlockManager : NSObject<CCLayerTouchDelegate,MIBlockDelegate>{
+@interface MIBlockManager : CCLayer <CCLayerTouchDelegate,MIBlockDelegate>{
     NSMutableArray *blocks;
-    
-    CCLayerTouch *blocksLayer;
     
     NSMutableArray *selectedBlocks;
     
@@ -30,8 +28,6 @@
 }
 
 @property(retain,nonatomic)NSMutableArray *blocks;
-
-@property(retain,nonatomic)CCLayerTouch *blocksLayer;
 
 @property(retain,nonatomic)NSMutableArray *selectedBlocks;
 
