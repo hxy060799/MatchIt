@@ -20,7 +20,7 @@
 
 -(id)init{
     if(self=[super init]){
-        [self loadMapWithTemplateIndex:10];
+        [self loadMapWithTemplateIndex:11];
         
         NSMutableArray *infArray=[[self readPlistWithPlistName:@"BlockInformation"]objectForKey:@"BlockInformation"];
         self.blockInformation=[[NSMutableArray alloc]initWithArray:infArray];

@@ -196,7 +196,7 @@ BOOL isPoping;
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
     isPoping=YES;
     
-    id delay=[CCDelayTime actionWithDuration:0.3];
+    id delay=[CCDelayTime actionWithDuration:0.5];
     id clearRoute=[CCCallFunc actionWithTarget:self selector:@selector(clearRoute)];
     id popBlockA=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexA];}];
     id popBlockB=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexB];}];

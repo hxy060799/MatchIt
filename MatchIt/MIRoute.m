@@ -98,10 +98,6 @@
 }
 
 -(void)parseVerteses{
-    for(MIPosition *position in [self routeVertexes]){
-        NSLog(@"****x:%i,y:%i",position.x,position.y);
-    }
-    
     if([self checkVertexes]==NO){
         return;
     }
@@ -111,6 +107,19 @@
         [self vertexAtIndex:i].direction=[self makeVertexDirectionWithVertex:[self vertexAtIndex:i] BlockA:[self vertexAtIndex:i-1] BlockB:[self vertexAtIndex:i+1]];
         [throughPoints addObject:[self vertexAtIndex:i]];
     }
+    //加入头和尾
+    //头
+    MIPosition *firstBlock=[routeVertexes objectAtIndex:0];
+    MIPosition *secondBlock=[routeVertexes objectAtIndex:1];
+    MIPosition *blockFirst=[MIPosition positionWithX:firstBlock.x Y:firstBlock.y];
+    blockFirst.direction=(firstBlock.x==secondBlock.x)?MIDirectionVertical:MIDirectionHorizontal;
+    [throughPoints addObject:blockFirst];
+    //尾
+    MIPosition *lastBlock=[routeVertexes objectAtIndex:routeVertexes.count-1];
+    MIPosition *secondlastBlock=[routeVertexes objectAtIndex:routeVertexes.count-2];
+    MIPosition *blockLast=[MIPosition positionWithX:lastBlock.x Y:lastBlock.y];
+    blockLast.direction=(lastBlock.x==secondlastBlock.x)?MIDirectionVertical:MIDirectionHorizontal;
+    [throughPoints addObject:blockLast];
     //生成路径
     for(int i=0;i<routeVertexes.count-1;i++){
         MIPosition *thisBlock=[self vertexAtIndex:i];
