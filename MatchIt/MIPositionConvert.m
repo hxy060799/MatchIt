@@ -125,13 +125,13 @@
         }
         
         if(conversion.spin==MISpinPlus90Degrees){
-            [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
+            [position_ setX:position_.y Y:-position_.x+BLOCKS_XCOUNT-1];
         }else if(conversion.spin==MISpinMinus90Degrees){
             [position_ setX:-position_.y+BLOCKS_YCOUNT-1 Y:position_.x];
         }
     }else{
         if(conversion.spin==MISpinPlus90Degrees){
-            [position_ setX:-position_.y+BLOCKS_YCOUNT-1 Y:position_.x];
+            [position_ setX:-position_.y+BLOCKS_XCOUNT-1 Y:position_.x];
         }else if(conversion.spin==MISpinMinus90Degrees){
             [position_ setX:position_.y Y:-position_.x+BLOCKS_YCOUNT-1];
         }
