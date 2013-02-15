@@ -8,6 +8,7 @@
 
 #import "MIBlock.h"
 #import "MIBlockDelegate.h"
+#import "MIConfig.h"
 
 @implementation MIBlock
 
@@ -36,6 +37,7 @@
 -(id)initWithSpriteFrameName:(NSString*)spriteFrameName{
     if(self=[self init]){
         blockSprite=[[[CCSprite alloc]initWithSpriteFrameName:spriteFrameName]autorelease];
+        [blockSprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
     }
     return self;
 }
@@ -46,7 +48,7 @@
 
 -(id)initWithBlockPosition:(MIPosition*)position_{
     if(self=[self init]){
-        blockPosition=[[MIPosition alloc]initWithX:position_.x Y:position_.y];
+        [blockPosition setX:position_.x Y:position_.y];
     }
     return self;
 }
@@ -59,10 +61,12 @@
 
 -(void)setBlockSpriteFrameWithFileName:(NSString*)spriteFrameName{
     [blockSprite setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:spriteFrameName]];
+    [blockSprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
 }
 
 -(void)setBlockRouteSpriteFrameWithFileName:(NSString*)spriteFrameName{
     [blockRouteSprite setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:spriteFrameName]];
+    [blockRouteSprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
 }
 
 

@@ -149,6 +149,7 @@ BOOL isPoping;
                 CCSprite *sprite=[CCSprite spriteWithSpriteFrameName:@"Selected.png"];
                 sprite.anchorPoint=ccp(0,0);
                 sprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+                [sprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
                 [self addChild:sprite z:2];
                 [selectedSprites addObject:sprite];
                 
