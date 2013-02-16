@@ -16,5 +16,4 @@
 
 +(id)particleWithFile:(NSString*)plistFile CustomTextureFile:(NSString*)imageName;
 
-
 @end

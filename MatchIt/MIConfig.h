@@ -23,5 +23,7 @@
 #define BLOCKS_BOTTOM_Y (160-(BLOCKS_SIZE*BLOCKS_YCOUNT)/2) //((320-BLOCKS_SIZE*BLOCKS_YCOUNT)/2)
 //图像大小(用于方块图像缩放)
 #define BLOCKS_IMAGE_SIZE 40.0f
+//方块pop粒子图像的数目
+#define POP_PARTICLE_IMAGES_COUNT 8
 
 #endif
