@@ -15,6 +15,8 @@
 #import "MIRoute.h"
 #import "MIMap.h"
 
+#import "CCParticleSystem+CustomTexture.h"
+
 @implementation MIBlockManager
 
 @synthesize blocks;
@@ -191,7 +193,7 @@ BOOL isPoping;
 }
 
 -(void)preloadParticleEffect{
-    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:@"star.png"];
 }
 
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
@@ -222,8 +224,10 @@ BOOL isPoping;
     [self removeBlockAtIndex:index];
     
     CCParticleSystem *system;
-    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist"];
+    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:@"star.png"];
     system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
+    [system setStartSize:BLOCKS_SIZE+10];
+    [system setEndSize:BLOCKS_SIZE-10];
     [self addChild:system z:100];
 }
 

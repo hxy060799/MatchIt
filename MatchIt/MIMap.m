@@ -8,6 +8,7 @@
 
 #import "MIMap.h"
 #import "MIPositionConvert.h"
+#import "MIConfig.h"
 
 @interface MIMap ()
 -(NSMutableDictionary*)readPlistWithPlistName:(NSString*)plistName;
@@ -63,9 +64,19 @@
 
 -(void)loadMapWithTemplateIndex:(int)index{
     NSArray *mapTemplate=[[[self readPlistWithPlistName:@"MatchItMap"]objectForKey:@"MatchItMap"]objectAtIndex:index];
+    
+    if([mapTemplate count]<BLOCKS_YCOUNT){
+        NSLog(@"地图太小");
+        return;
+    }
+    
     NSMutableArray *templateBlocks=[NSMutableArray array];
-    for(int i=0;i<[mapTemplate count];i++){
-        for(int j=0;j<[[mapTemplate objectAtIndex:i]count];j++){
+    for(int i=0;i<BLOCKS_YCOUNT;i++){
+        for(int j=0;j<BLOCKS_XCOUNT;j++){
+            if([[mapTemplate objectAtIndex:i]count]<BLOCKS_XCOUNT){
+                NSLog(@"地图太小");
+                return;
+            }
             if([[[mapTemplate objectAtIndex:i]objectAtIndex:j]intValue]==1){
                 MIPosition *blockPosition=[MIPosition positionWithX:i Y:j];
                 [templateBlocks addObject:blockPosition];
@@ -74,7 +85,7 @@
     }
     
     if([templateBlocks count]%2==1){
-        NSLog(@"There is something wrong with the map template.");
+        NSLog(@"地图方块数为奇数");
         return;
     }
     

@@ -158,14 +158,8 @@
     
     BOOL isMatched=YES;
     
-    NSLog(@"A x:%i y:%i",blockA.x,blockA.y);
-    NSLog(@"B x:%i y:%i",blockB.x,blockB.y);
-    
     blockA=[MIPositionConvert convertWithConversion:conversion Position:blockA inverse:NO];
     blockB=[MIPositionConvert convertWithConversion:conversion Position:blockB inverse:NO];
-    
-    NSLog(@"A x:%i y:%i",blockA.x,blockA.y);
-    NSLog(@"B x:%i y:%i",blockB.x,blockB.y);
     
     if((blockA.x<blockB.x && blockA.y>blockB.y)||(blockA.x>blockB.x && blockA.y<blockB.y)||(blockA.y==blockB.y)){
         if(blockA.x>blockB.x && blockA.y<blockB.y){
