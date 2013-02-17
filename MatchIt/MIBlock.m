@@ -24,7 +24,7 @@
     if(self=[super init]){
         blockSprite=[[[CCSprite alloc]init]autorelease];
         blockRouteSprite=[[[CCSprite alloc]init]autorelease];
-        self.selected=NO;
+        selected=NO;
         blockPosition=[[MIPosition alloc]initWithX:-1 Y:-1];
     }
     return self;
@@ -35,9 +35,13 @@
 }
 
 -(id)initWithSpriteFrameName:(NSString*)spriteFrameName{
-    if(self=[self init]){
+    if(self=[super init]){
         blockSprite=[[[CCSprite alloc]initWithSpriteFrameName:spriteFrameName]autorelease];
         [blockSprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
+        
+        blockRouteSprite=[[[CCSprite alloc]init]autorelease];
+        selected=NO;
+        blockPosition=[[MIPosition alloc]initWithX:-1 Y:-1];
     }
     return self;
 }
@@ -47,8 +51,11 @@
 }
 
 -(id)initWithBlockPosition:(MIPosition*)position_{
-    if(self=[self init]){
-        [blockPosition setX:position_.x Y:position_.y];
+    if(self=[super init]){
+        blockSprite=[[[CCSprite alloc]init]autorelease];
+        blockRouteSprite=[[[CCSprite alloc]init]autorelease];
+        selected=NO;
+        blockPosition=[[MIPosition alloc]initWithX:position_.x Y:position_.y];
     }
     return self;
 }

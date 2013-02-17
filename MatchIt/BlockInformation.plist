@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>ImageName</key>
-			<string>Block_Black.png</string>
+			<string>Block_None.png</string>
 			<key>Description</key>
 			<string>空方块</string>
 		</dict>

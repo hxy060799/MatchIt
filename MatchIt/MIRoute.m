@@ -16,8 +16,8 @@
 
 -(id)init{
     if(self=[super init]){
-        self.routeVertexes=[[NSMutableArray alloc]init];
-        self.throughPoints=[[NSMutableArray alloc]init];
+        routeVertexes=[[NSMutableArray alloc]init];
+        throughPoints=[[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -28,8 +28,8 @@
 
 -(id)initWithRouteVertexes:(NSMutableArray*)vertexes{
     if(self=[super init]){
-        self.routeVertexes=[vertexes copy];
-        self.throughPoints=[[NSMutableArray alloc]init];
+        routeVertexes=[[NSMutableArray alloc]initWithArray:vertexes];
+        throughPoints=[[NSMutableArray alloc]init];
     }
     return self;
 }

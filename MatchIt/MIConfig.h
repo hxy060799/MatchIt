@@ -12,7 +12,7 @@
 #pragma mark - Block Generate
 
 //方块大小
-#define BLOCKS_SIZE 20.0f
+#define BLOCKS_SIZE 40.0f
 //方块数量
 #define BLOCKS_XCOUNT  (int)(480/BLOCKS_SIZE)
 #define BLOCKS_YCOUNT  (int)(320/BLOCKS_SIZE)
@@ -24,6 +24,6 @@
 //图像大小(用于方块图像缩放)
 #define BLOCKS_IMAGE_SIZE 40.0f
 //方块pop粒子图像的数目
-#define POP_PARTICLE_IMAGES_COUNT 8
+#define POP_PARTICLE_IMAGES_COUNT 6
 
 #endif

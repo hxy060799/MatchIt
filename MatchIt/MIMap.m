@@ -24,7 +24,7 @@
         [self loadMapWithTemplateIndex:12];
         
         NSMutableArray *infArray=[[self readPlistWithPlistName:@"BlockInformation"]objectForKey:@"BlockInformation"];
-        self.blockInformation=[[NSMutableArray alloc]initWithArray:infArray];
+        self.blockInformation=infArray;
     }
     return self;
 }
@@ -110,7 +110,7 @@
         [templateBlocks_ addObject:[templateBlocks objectAtIndex:numbers[i]]];
     }
     
-    self.map=[[NSMutableArray alloc]initWithArray:mapTemplate];
+    map=[[NSMutableArray alloc]initWithArray:mapTemplate];
     
     for(int i=0;i<templateBlocks_.count;i+=2){
         MIPosition *thisBlock=[templateBlocks_ objectAtIndex:i];

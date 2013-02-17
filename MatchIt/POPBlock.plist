@@ -15,7 +15,7 @@
 	<key>emitterType</key>
 	<real>0.0</real>
 	<key>finishColorAlpha</key>
-	<real>1</real>
+	<real>0.30000001192092896</real>
 	<key>finishColorBlue</key>
 	<real>1</real>
 	<key>finishColorGreen</key>
@@ -23,7 +23,7 @@
 	<key>finishColorRed</key>
 	<real>1</real>
 	<key>finishColorVarianceAlpha</key>
-	<real>0.0</real>
+	<real>0.5</real>
 	<key>finishColorVarianceBlue</key>
 	<real>1</real>
 	<key>finishColorVarianceGreen</key>
@@ -39,7 +39,7 @@
 	<key>gravityy</key>
 	<real>0.0</real>
 	<key>maxParticles</key>
-	<real>40</real>
+	<real>30</real>
 	<key>maxRadius</key>
 	<real>100</real>
 	<key>maxRadiusVariance</key>
@@ -47,7 +47,7 @@
 	<key>minRadius</key>
 	<real>0.0</real>
 	<key>particleLifespan</key>
-	<real>0.05000000074505806</real>
+	<real>0.019999999552965164</real>
 	<key>particleLifespanVariance</key>
 	<real>0.5</real>
 	<key>radialAccelVariance</key>
@@ -79,7 +79,7 @@
 	<key>speedVariance</key>
 	<real>0.0</real>
 	<key>startColorAlpha</key>
-	<real>1</real>
+	<real>0.5</real>
 	<key>startColorBlue</key>
 	<real>1</real>
 	<key>startColorGreen</key>
@@ -87,7 +87,7 @@
 	<key>startColorRed</key>
 	<real>1</real>
 	<key>startColorVarianceAlpha</key>
-	<real>0.0</real>
+	<real>0.30000001192092896</real>
 	<key>startColorVarianceBlue</key>
 	<real>0.0</real>
 	<key>startColorVarianceGreen</key>
@@ -103,6 +103,6 @@
 	<key>tangentialAcceleration</key>
 	<real>0.0</real>
 	<key>textureFileName</key>
-	<string>star_2.png</string>
+	<string>particleTexture.png</string>
 </dict>
 </plist>

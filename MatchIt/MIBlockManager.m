@@ -51,7 +51,11 @@ BOOL isPoping;
         self.position=ccp(0,0);
         
         [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"BasicImage.plist"];
-        [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"stars.plist"];
+        
+        CCSprite *background=[CCSprite spriteWithSpriteFrameName:@"Background.png"];
+        [background setPosition:ccp(0,0)];
+        [background setAnchorPoint:ccp(0,0)];
+        [self addChild:background];
         
         for(int i=0;i<BLOCKS_COUNT;i++){
             MIBlock *aBlock=[MIBlock blockWithBlockPosition:[MIPositionConvert indexToPositonWithIndex:i]];
@@ -226,8 +230,10 @@ BOOL isPoping;
     CCParticleSystem *system;
     system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
     system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
-    [system setStartSize:BLOCKS_SIZE];
-    [system setEndSize:BLOCKS_SIZE-20];
+    [system setStartSize:BLOCKS_SIZE*1.5];
+    [system setStartSizeVar:BLOCKS_SIZE*0.5];
+    [system setEndSize:BLOCKS_SIZE*0.2];
+    [system setEndSizeVar:BLOCKS_SIZE*0.2];
     [self addChild:system z:100];
 }
 
