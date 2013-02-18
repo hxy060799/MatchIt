@@ -142,55 +142,57 @@ BOOL isPoping;
 #pragma mark - MIBlockDelegate
 
 -(void)blockBeingSelectedWithIndex:(int)blockIndex{
-    MIBlock *block=[self blockAtIndex:blockIndex];
-    MIPosition *blockPosition=block.blockPosition;
-    //先判断这个方块是不是空的
-    if([map blockAtX:blockPosition.x Y:blockPosition.y]!=0){
-        //被选中的加入到数组,被取消选中的从数组中移除
-        if(block.selected==NO){
-            if(selectedBlocks.count==0){
-                [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
-                
-                CCSprite *sprite=[CCSprite spriteWithSpriteFrameName:@"Selected.png"];
-                sprite.anchorPoint=ccp(0,0);
-                sprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
-                [sprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
-                [self addChild:sprite z:2];
-                [selectedSprites addObject:sprite];
-                
-                block.selected=YES;
-            }else if([selectedBlocks count]==1){
-                MIBlock *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]];
-                MIPosition *blockPositionA=blockA.blockPosition;
-                MIPosition *blockB=blockPosition;
-                [self blockBeingSelectedWithIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
-                
-                if([map blockAtX:blockPositionA.x Y:blockPositionA.y]==[map blockAtX:blockB.x Y:blockB.y]){
-                    NSMutableDictionary *matchResult=[MIMatching isMatchingWithA:blockPositionA B:blockB Map:map];
-                    if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
-                        MIRoute *route=[matchResult objectForKey:@"Route"];
-                        [route parseVerteses];
-                        [MIRoute drawRouteWithRoute:route manager:self];
-                        
-                        [self popBlockWithIndexA:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y] IndexB:blockIndex];
-                    }else{
-                        NSLog(@"Not Matched");
+    if(!isPoping){
+        MIBlock *block=[self blockAtIndex:blockIndex];
+        MIPosition *blockPosition=block.blockPosition;
+        //先判断这个方块是不是空的
+        if([map blockAtX:blockPosition.x Y:blockPosition.y]!=0){
+            //被选中的加入到数组,被取消选中的从数组中移除
+            if(block.selected==NO){
+                if(selectedBlocks.count==0){
+                    [selectedBlocks addObject:[NSNumber numberWithInt:blockIndex]];
+                    
+                    CCSprite *sprite=[CCSprite spriteWithSpriteFrameName:@"Selected.png"];
+                    sprite.anchorPoint=ccp(0,0);
+                    sprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+                    [sprite setScale:BLOCKS_SIZE/BLOCKS_IMAGE_SIZE];
+                    [self addChild:sprite z:2];
+                    [selectedSprites addObject:sprite];
+                    
+                    block.selected=YES;
+                }else if([selectedBlocks count]==1){
+                    MIBlock *blockA=[self blockAtIndex:[[selectedBlocks objectAtIndex:0]intValue]];
+                    MIPosition *blockPositionA=blockA.blockPosition;
+                    MIPosition *blockB=blockPosition;
+                    [self blockBeingSelectedWithIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
+                    
+                    if([map blockAtX:blockPositionA.x Y:blockPositionA.y]==[map blockAtX:blockB.x Y:blockB.y]){
+                        NSMutableDictionary *matchResult=[MIMatching isMatchingWithA:blockPositionA B:blockB Map:map];
+                        if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
+                            MIRoute *route=[matchResult objectForKey:@"Route"];
+                            [route parseVerteses];
+                            [MIRoute drawRouteWithRoute:route manager:self];
+                            
+                            [self popBlockWithIndexA:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y] IndexB:blockIndex];
+                        }else{
+                            NSLog(@"Not Matched");
+                        }
+                    }
+                }
+            }else{
+                for(int i=0;i<[selectedBlocks count];i++){
+                    NSNumber *selectedIndex=[selectedBlocks objectAtIndex:i];
+                    if([selectedIndex intValue]==blockIndex){
+                        [selectedBlocks removeObjectAtIndex:i];
+                        [[selectedSprites objectAtIndex:i]removeFromParentAndCleanup:YES];
+                        [selectedSprites removeObjectAtIndex:i];
+                        block.selected=NO;
                     }
                 }
             }
-        }else{
-            for(int i=0;i<[selectedBlocks count];i++){
-                NSNumber *selectedIndex=[selectedBlocks objectAtIndex:i];
-                if([selectedIndex intValue]==blockIndex){
-                    [selectedBlocks removeObjectAtIndex:i];
-                    [[selectedSprites objectAtIndex:i]removeFromParentAndCleanup:YES];
-                    [selectedSprites removeObjectAtIndex:i];
-                    block.selected=NO;
-                }
+            if(delegate){
+                [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,block.selected,[selectedBlocks count]]];
             }
-        }
-        if(delegate){
-            [delegate traceWithString:[NSString stringWithFormat:@"X:%i,Y:%i,Selected:%d,All:%iSelected",blockPosition.x,blockPosition.y,block.selected,[selectedBlocks count]]];
         }
     }
 }
@@ -204,14 +206,13 @@ BOOL isPoping;
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
     isPoping=YES;
     
-    id delay=[CCDelayTime actionWithDuration:0.5];
-    id clearRoute=[CCCallFunc actionWithTarget:self selector:@selector(clearRoute)];
-    id popBlockA=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexA];}];
-    id popBlockB=[CCCallBlock actionWithBlock:^(void){[self showPOPParticleWithBlockIndex:indexB];}];
-    //[self removeBlockAtIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
-    //[self removeBlockAtIndex:blockIndex];
+    CCDelayTime *delay=[CCDelayTime actionWithDuration:0.5];
+    CCCallFunc *clearRoute=[CCCallFunc actionWithTarget:self selector:@selector(clearRoute)];
+    CCCallBlock *popBlockA=[CCCallBlock actionWithBlock:^(void){[self showPopParticleWithBlockIndex:indexA];}];
+    CCCallBlock *popBlockB=[CCCallBlock actionWithBlock:^(void){[self showPopParticleWithBlockIndex:indexB];}];
+    CCCallFunc *popEnded=[CCCallFunc actionWithTarget:self selector:@selector(popEnded)];
     
-    [self runAction:[CCSequence actions:delay,clearRoute,popBlockA,popBlockB,nil]];
+    [self runAction:[CCSequence actions:delay,clearRoute,popBlockA,popBlockB,popEnded,nil]];
     
 }
 
@@ -221,7 +222,7 @@ BOOL isPoping;
     }
 }
 
--(void)showPOPParticleWithBlockIndex:(int)index{
+-(void)showPopParticleWithBlockIndex:(int)index{
     //显示POP粒子效果的同时也移除方块
     MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:index];
     
@@ -235,6 +236,10 @@ BOOL isPoping;
     [system setEndSize:BLOCKS_SIZE*0.2];
     [system setEndSizeVar:BLOCKS_SIZE*0.2];
     [self addChild:system z:100];
+}
+
+-(void)popEnded{
+    isPoping=NO;
 }
 
 @end

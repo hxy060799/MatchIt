@@ -13,13 +13,15 @@
 #import "MIConfig.h"
 
 @class MIRoute;
+#warning
 @class MIMap;
+@class MIMatchingResult;
 
 @interface MIMatching : NSObject
 
 +(NSMutableDictionary*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map;
 
-+(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion;
++(MIMatchingResult*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion;
 
 +(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion;
 

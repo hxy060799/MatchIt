@@ -154,6 +154,7 @@
 		A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FBAED416BDF87600F1C541 /* MIMap.m */; };
 		A9FBAED816BDFB2100F1C541 /* MatchItMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */; };
 		A9FBAEDA16BDFEBD00F1C541 /* BlockInformation.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */; };
+		F4EC8ACF16D2741C00BD5C7C /* MIMatchingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC8ACE16D2741C00BD5C7C /* MIMatchingResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -452,6 +453,8 @@
 		A9FBAED416BDF87600F1C541 /* MIMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMap.m; sourceTree = "<group>"; };
 		A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MatchItMap.plist; sourceTree = "<group>"; };
 		A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlockInformation.plist; sourceTree = "<group>"; };
+		F4EC8ACD16D2741C00BD5C7C /* MIMatchingResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIMatchingResult.h; sourceTree = "<group>"; };
+		F4EC8ACE16D2741C00BD5C7C /* MIMatchingResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIMatchingResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -937,6 +940,8 @@
 				A9FBAED416BDF87600F1C541 /* MIMap.m */,
 				A93A6FB316BCC3AA008B0ED1 /* MIMatching.h */,
 				A93A6FB416BCC3AA008B0ED1 /* MIMatching.m */,
+				F4EC8ACD16D2741C00BD5C7C /* MIMatchingResult.h */,
+				F4EC8ACE16D2741C00BD5C7C /* MIMatchingResult.m */,
 				A93A6FB716BCC3B0008B0ED1 /* MIRoute.h */,
 				A93A6FB816BCC3B0008B0ED1 /* MIRoute.m */,
 			);
@@ -1141,6 +1146,7 @@
 				A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */,
 				A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */,
 				A9A0990416CF3B1400A321AD /* CCParticleSystem+CustomTexture.m in Sources */,
+				F4EC8ACF16D2741C00BD5C7C /* MIMatchingResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

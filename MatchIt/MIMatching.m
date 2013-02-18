@@ -11,6 +11,7 @@
 #import "MIBlock.h"
 #import "MIMap.h"
 #import "MIRoute.h"
+#import "MIMatchingResult.h"
 
 @implementation MIMatching
 
@@ -19,9 +20,9 @@
     [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
     //A
     for(int i=0;i<=2;i+=2){
-        MIRoute *route=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:i]];
-        if(route!=nil){
-            [result setObject:route forKey:@"Route"];
+        MIMatchingResult *result_=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:i]];
+        if(result_.matched){
+            [result setObject:result_.route forKey:@"Route"];
             return result;
         }
     }
@@ -61,7 +62,7 @@
     return result;
 }
 
-+(MIRoute*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
++(MIMatchingResult*)isMatchingAWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     
     BOOL isMatched=YES;
     
@@ -80,7 +81,6 @@
             MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
-                break;
             }
         }
         
@@ -92,14 +92,11 @@
             
             routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
             
-            return [MIRoute routeWithRouteVertexes:routeVertexes];
-        }else{
-            return nil;
+            return [MIMatchingResult resultWithRouteVertexes:routeVertexes];
         }
-        
-    }else{
-        return nil;
     }
+    
+    return [MIMatchingResult resultWithMatched:NO];
 }
 
 +(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
