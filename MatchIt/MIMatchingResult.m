@@ -31,7 +31,6 @@
     if(self=[super init]){
         if(matched_){
             matched=YES;
-            route=[[MIRoute alloc]init];
         }else{
             matched=NO;
         }

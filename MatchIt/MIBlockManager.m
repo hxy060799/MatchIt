@@ -14,6 +14,7 @@
 #import "MIMatching.h"
 #import "MIRoute.h"
 #import "MIMap.h"
+#import "MIMatchingResult.h"
 
 #import "CCParticleSystem+CustomTexture.h"
 
@@ -167,9 +168,9 @@ BOOL isPoping;
                     [self blockBeingSelectedWithIndex:[MIPositionConvert positionToIndexWithX:blockPositionA.x y:blockPositionA.y]];
                     
                     if([map blockAtX:blockPositionA.x Y:blockPositionA.y]==[map blockAtX:blockB.x Y:blockB.y]){
-                        NSMutableDictionary *matchResult=[MIMatching isMatchingWithA:blockPositionA B:blockB Map:map];
-                        if([[matchResult objectForKey:@"IsMatched"]boolValue]==YES){
-                            MIRoute *route=[matchResult objectForKey:@"Route"];
+                        MIMatchingResult *matchResult=[MIMatching isMatchingWithA:blockPositionA B:blockB Map:map];
+                        if(matchResult.matched){
+                            MIRoute *route=matchResult.route;
                             [route parseVerteses];
                             [MIRoute drawRouteWithRoute:route manager:self];
                             

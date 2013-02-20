@@ -15,23 +15,23 @@
 
 @implementation MIMatching
 
-+(NSMutableDictionary*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
-    NSMutableDictionary *result=[NSMutableDictionary dictionary];
-    [result setObject:[NSNumber numberWithBool:YES] forKey:@"IsMatched"];
++(MIMatchingResult*)isMatchingWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map{
+    MIMatchingResult *result=[MIMatchingResult resultWithMatched:YES];
+    
     //A
     for(int i=0;i<=2;i+=2){
         MIMatchingResult *result_=[self isMatchingAWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:MIFlipNone Spin:i]];
         if(result_.matched){
-            [result setObject:result_.route forKey:@"Route"];
+            result.route=result_.route;
             return result;
         }
     }
     //B
     for(int i=0;i<=1;i++){
         for(int j=0;j<=1;j++){
-            MIRoute *route=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
-            if(route!=nil){
-                [result setObject:route forKey:@"Route"];
+            MIMatchingResult *result_=[self isMatchingBWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(result_.matched){
+                result.route=result_.route;
                 return result;
             }
         }
@@ -39,9 +39,9 @@
     //C
     for(int i=0;i<=1;i++){
         for(int j=0;j<4;j++){
-            MIRoute *route=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
-            if(route!=nil){
-                [result setObject:route forKey:@"Route"];
+            MIMatchingResult *result_=[self isMatchingCWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(result_.matched){
+                result.route=result_.route;
                 return result;
             }
         }
@@ -49,15 +49,15 @@
     //D
     for(int i=0;i<=1;i++){
         for(int j=0;j<=2;j+=2){
-            MIRoute *route=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
-            if(route!=nil){
-                [result setObject:route forKey:@"Route"];
+            MIMatchingResult *result_=[self isMatchingDWithA:blockA B:blockB Map:map Conversion:[MIConversion conversionWithFlip:i Spin:j]];
+            if(result_.matched){
+                result.route=result_.route;
                 return result;
             }
         }
     }
       
-    [result setObject:[NSNumber numberWithBool:NO] forKey:@"IsMatched"];
+    result.matched=NO;
     
     return result;
 }
@@ -95,11 +95,10 @@
             return [MIMatchingResult resultWithRouteVertexes:routeVertexes];
         }
     }
-    
     return [MIMatchingResult resultWithMatched:NO];
 }
 
-+(MIRoute*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
++(MIMatchingResult*)isMatchingBWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     
     BOOL isMatched=YES;
     
@@ -119,7 +118,6 @@
             MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
-                break;
             }
         }
         //向下
@@ -127,7 +125,6 @@
             MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
             if([map blockAtX:position.x Y:position.y]!=0){
                 isMatched=NO;
-                break;
             }
         }
         
@@ -140,18 +137,13 @@
             
             routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
             
-            return [MIRoute routeWithRouteVertexes:routeVertexes];
-        }else{
-            return nil;
+            return [MIMatchingResult resultWithRouteVertexes:routeVertexes];
         }
-        
-    }else{
-        return nil;
     }
-    
+    return [MIMatchingResult resultWithMatched:NO];
 }
 
-+(MIRoute*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
++(MIMatchingResult*)isMatchingCWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     
     BOOL isMatched=YES;
     
@@ -166,13 +158,12 @@
         }
         
         if(blockA.y<[MIPositionConvert heightWithConversion:conversion]-1){
-            isMatched=YES;
             //上方
             //公共部分
             for(int i=blockA.y;i>blockB.y;i--){
                 MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
                 if([map blockAtX:position.x Y:position.y]!=0){
-                    return nil;
+                    return [MIMatchingResult resultWithMatched:NO];
                 }
             }
             for(int j=blockA.y+1;j<[MIPositionConvert heightWithConversion:conversion];j++){
@@ -182,12 +173,10 @@
                     MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockA.x Y:i inverse:YES];
                     if([map blockAtX:position.x Y:position.y]!=0){
                         isMatched=NO;
-                        break;
                     }
                     position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
                     if([map blockAtX:position.x Y:position.y]!=0){
                         isMatched=NO;
-                        break;
                     }
                 }
                 //上面
@@ -208,15 +197,15 @@
                     
                     routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
                     
-                    return [MIRoute routeWithRouteVertexes:routeVertexes];
+                    return [MIMatchingResult resultWithRouteVertexes:routeVertexes];
                 }
             }
         }
     }
-    return nil;
+    return [MIMatchingResult resultWithMatched:NO];
 }
 
-+(MIRoute*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
++(MIMatchingResult*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion{
     
     BOOL isMatched=YES;
     
@@ -237,7 +226,6 @@
                 MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:j Y:blockA.y inverse:YES];
                 if([map blockAtX:position.x Y:position.y]!=0){
                     isMatched=NO;
-                    break;
                 }
             }
             //中间
@@ -245,7 +233,6 @@
                 MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:i Y:j inverse:YES];
                 if([map blockAtX:position.x Y:position.y]!=0){
                     isMatched=NO;
-                    break;
                 }
             }
             //下段
@@ -265,14 +252,11 @@
                 
                 routeVertexes=[MIPositionConvert convertWithConversion:conversion Positions:routeVertexes inverse:YES];
                 
-                return [MIRoute routeWithRouteVertexes:routeVertexes];
+                return [MIMatchingResult resultWithRouteVertexes:routeVertexes];
             }
         }
-        
-        return nil;
-    }else{
-        return NO;
     }
+    return [MIMatchingResult resultWithMatched:NO];
 }
 
 @end
