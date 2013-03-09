@@ -16,7 +16,7 @@
 #import "MIMap.h"
 #import "MIMatchingResult.h"
 
-#import "CCParticleSystem+CustomTexture.h"
+#import "CCParticleSystemQuad+DisplayFrame.h"
 
 @implementation MIBlockManager
 
@@ -199,8 +199,9 @@ BOOL isPoping;
 }
 
 -(void)preloadParticleEffect{
+    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
     for(int i=0;i<POP_PARTICLE_IMAGES_COUNT;i++){
-        [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",i]];
+        //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",i]];
     }
 }
 
@@ -229,8 +230,10 @@ BOOL isPoping;
     
     [self removeBlockAtIndex:index];
     
-    CCParticleSystem *system;
-    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
+    CCParticleSystemQuad *system;
+    //system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
+    
+    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
     system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
     [system setStartSize:BLOCKS_SIZE*1.5];
     [system setStartSizeVar:BLOCKS_SIZE*0.5];

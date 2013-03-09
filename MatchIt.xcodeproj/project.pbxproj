@@ -147,7 +147,7 @@
 		A966E01016D0CACC00AD4A3E /* star_5.png in Resources */ = {isa = PBXBuildFile; fileRef = A966E00A16D0CACC00AD4A3E /* star_5.png */; };
 		A967EECA16CB74ED00960C27 /* BasicImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = A967EEC816CB74ED00960C27 /* BasicImage.plist */; };
 		A967EECB16CB74ED00960C27 /* BasicImage.png in Resources */ = {isa = PBXBuildFile; fileRef = A967EEC916CB74ED00960C27 /* BasicImage.png */; };
-		A9A0990416CF3B1400A321AD /* CCParticleSystem+CustomTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A0990316CF3B1400A321AD /* CCParticleSystem+CustomTexture.m */; };
+		A9A0990416CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A0990316CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.m */; };
 		A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */; };
 		A9EF455C16B7D98D0037631A /* MIBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455216B7D98D0037631A /* MIBlock.m */; };
 		A9EF455D16B7D98D0037631A /* MIBlockManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EF455516B7D98D0037631A /* MIBlockManager.m */; };
@@ -438,8 +438,8 @@
 		A966E00A16D0CACC00AD4A3E /* star_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_5.png; sourceTree = "<group>"; };
 		A967EEC816CB74ED00960C27 /* BasicImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BasicImage.plist; sourceTree = "<group>"; };
 		A967EEC916CB74ED00960C27 /* BasicImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BasicImage.png; sourceTree = "<group>"; };
-		A9A0990216CF3B1400A321AD /* CCParticleSystem+CustomTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCParticleSystem+CustomTexture.h"; sourceTree = "<group>"; };
-		A9A0990316CF3B1400A321AD /* CCParticleSystem+CustomTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCParticleSystem+CustomTexture.m"; sourceTree = "<group>"; };
+		A9A0990216CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCParticleSystemQuad+DisplayFrame.h"; sourceTree = "<group>"; };
+		A9A0990316CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCParticleSystemQuad+DisplayFrame.m"; sourceTree = "<group>"; };
 		A9B9CB9F16BCC5630038ECA1 /* MIPositionConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIPositionConvert.h; sourceTree = "<group>"; };
 		A9B9CBA016BCC5630038ECA1 /* MIPositionConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIPositionConvert.m; sourceTree = "<group>"; };
 		A9EF455116B7D98D0037631A /* MIBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIBlock.h; sourceTree = "<group>"; };
@@ -534,13 +534,13 @@
 			children = (
 				A91F9E4D16D0BAD20001C950 /* POPBlock.plist */,
 				A98B5E9D16CF772B00E12783 /* Stars */,
-				A967EEC816CB74ED00960C27 /* BasicImage.plist */,
 				A967EEC916CB74ED00960C27 /* BasicImage.png */,
 				A93D5D2616C8A46B00B81413 /* Default-568h@2x.png */,
 				A9FBAED716BDFB2100F1C541 /* MatchItMap.plist */,
 				A9FBAED916BDFEBD00F1C541 /* BlockInformation.plist */,
 				A95EA84516B74DD000AB38E9 /* Default.png */,
 				A95EA84716B74DD000AB38E9 /* Default-Landscape~ipad.png */,
+				A967EEC816CB74ED00960C27 /* BasicImage.plist */,
 				A95EA84916B74DD000AB38E9 /* fps_images.png */,
 				A95EA84B16B74DD000AB38E9 /* fps_images-hd.png */,
 				A95EA84D16B74DD000AB38E9 /* fps_images-ipadhd.png */,
@@ -902,8 +902,8 @@
 		A95EAB6016B74F5200AB38E9 /* Cocos2dSubClasses */ = {
 			isa = PBXGroup;
 			children = (
-				A9A0990216CF3B1400A321AD /* CCParticleSystem+CustomTexture.h */,
-				A9A0990316CF3B1400A321AD /* CCParticleSystem+CustomTexture.m */,
+				A9A0990216CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.h */,
+				A9A0990316CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.m */,
 				A95EAB5C16B74F4D00AB38E9 /* CCLayerTouch.h */,
 				A95EAB5D16B74F4D00AB38E9 /* CCLayerTouch.m */,
 				A95EAB5E16B74F4D00AB38E9 /* CCLayerTouchDelegate.h */,
@@ -1145,7 +1145,7 @@
 				A93A6FB916BCC3B0008B0ED1 /* MIRoute.m in Sources */,
 				A9B9CBA116BCC5630038ECA1 /* MIPositionConvert.m in Sources */,
 				A9FBAED516BDF87600F1C541 /* MIMap.m in Sources */,
-				A9A0990416CF3B1400A321AD /* CCParticleSystem+CustomTexture.m in Sources */,
+				A9A0990416CF3B1400A321AD /* CCParticleSystemQuad+DisplayFrame.m in Sources */,
 				F4EC8ACF16D2741C00BD5C7C /* MIMatchingResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

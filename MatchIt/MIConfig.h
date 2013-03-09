@@ -12,10 +12,10 @@
 #pragma mark - Block Generate
 
 //方块大小
-#define BLOCKS_SIZE 40.0f
+#define BLOCKS_SIZE 35.0f
 //方块数量
-#define BLOCKS_XCOUNT  (int)(480/BLOCKS_SIZE)
-#define BLOCKS_YCOUNT  (int)(320/BLOCKS_SIZE)
+#define BLOCKS_XCOUNT  12//(int)(480/BLOCKS_SIZE)
+#define BLOCKS_YCOUNT  8//(int)(320/BLOCKS_SIZE)
 //方块总数
 #define BLOCKS_COUNT (BLOCKS_XCOUNT*BLOCKS_YCOUNT)
 //为了使方块堆在屏幕中间,左边和下边所需空出的距离

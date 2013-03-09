@@ -306,7 +306,7 @@
     
 	// update texture before updating texture rect
 	if ( spriteFrame.texture.name != texture_.name )
-		[self setTexture: spriteFrame.texture];
+        [self setTexture:spriteFrame.texture withRect:spriteFrame.rect];
 }
 
 -(void) initIndices

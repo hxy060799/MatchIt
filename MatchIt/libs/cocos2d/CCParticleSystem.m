@@ -225,11 +225,11 @@
 
 			// texture
 			// Try to get the texture from the cache
-
+            /*
 			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
-
+            
 			CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
-
+            
 			if( tex )
 				[self setTexture:tex];
 			else {
@@ -261,8 +261,8 @@
 				[data release];
 				[image release];
 			}
-
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
+             */
 		}
 	}
 
