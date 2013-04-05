@@ -27,4 +27,5 @@
 
 +(MIMatchingResult*)isMatchingDWithA:(MIPosition*)blockA B:(MIPosition*)blockB Map:(MIMap*)map Conversion:(MIConversion*)conversion;
 
+
 @end

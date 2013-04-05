@@ -80,11 +80,8 @@
         isMatched=NO;
     }
     
-    for(int i=blockA.x+1;i<blockB.x;i++){
-        MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
-        if([map blockAtX:position.x Y:position.y]!=0){
-            isMatched=NO;
-        }
+    if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.x+1 MoveablePointEnd:blockB.x-1 StaticPoint:blockA.y IsXMoveable:YES Map:map Conversion:conversion]){
+        isMatched=NO;
     }
     
     if(isMatched){
@@ -121,18 +118,12 @@
     }
     
     //向右
-    for(int i=blockA.x+1;i<=blockB.x;i++){
-        MIPosition *position=position=[MIPositionConvert convertWithConversion:conversion X:i Y:blockA.y inverse:YES];
-        if([map blockAtX:position.x Y:position.y]!=0){
-            isMatched=NO;
-        }
+    if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.x+1 MoveablePointEnd:blockB.x StaticPoint:blockA.y IsXMoveable:YES Map:map Conversion:conversion]){
+        isMatched=NO;
     }
     //向下
-    for(int i=blockA.y-1;i>blockB.y;i--){
-        MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
-        if([map blockAtX:position.x Y:position.y]!=0){
-            isMatched=NO;
-        }
+    if(![MIMatching isMatchingInLineWithMoveablePointStart:blockB.y+1 MoveablePointEnd:blockA.y-1 StaticPoint:blockB.x IsXMoveable:NO Map:map Conversion:conversion]){
+        isMatched=NO;
     }
     
     if(isMatched==YES){
@@ -171,32 +162,23 @@
     
     //上方
     //公共部分
-    for(int i=blockA.y;i>blockB.y;i--){
-        MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
-        if([map blockAtX:position.x Y:position.y]!=0){
-            return [MIMatchingResult resultWithMatched:NO];
-        }
+    if(![MIMatching isMatchingInLineWithMoveablePointStart:blockB.y+1 MoveablePointEnd:blockA.y StaticPoint:blockB.x IsXMoveable:NO Map:map Conversion:conversion]){
+        return [MIMatchingResult resultWithMatched:NO];
     }
     
     for(int j=blockA.y+1;j<[MIPositionConvert heightWithConversion:conversion];j++){
         BOOL isMatched=YES;
         //左右两边
-        for(int i=blockA.y+1;i<=j;i++){
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:blockA.x Y:i inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
-            position=[MIPositionConvert convertWithConversion:conversion X:blockB.x Y:i inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.y+1 MoveablePointEnd:j StaticPoint:blockA.x IsXMoveable:NO Map:map Conversion:conversion]){
+            isMatched=NO;
         }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.y+1 MoveablePointEnd:j StaticPoint:blockB.x IsXMoveable:NO Map:map Conversion:conversion]){
+            isMatched=NO;
+        }
+        
         //上面
-        for(int i=blockA.x+1;i<blockB.x;i++){
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:i Y:j inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.x+1 MoveablePointEnd:blockB.x-1 StaticPoint:j IsXMoveable:YES Map:map Conversion:conversion]){
+            isMatched=NO;
         }
         
         if(isMatched==YES){
@@ -225,7 +207,6 @@
         blockB=blockA;
         blockA=positionTemp;
     }
-    
     if(!(blockA.x<blockB.x && blockA.y>blockB.y)||!(abs(blockA.y-blockB.y)>=1)){
         return [MIMatchingResult resultWithMatched:NO];
     }
@@ -233,25 +214,16 @@
     for(int i=blockA.x+1;i<blockB.x;i++){
         BOOL isMatched=YES;
         //上段
-        for(int j=blockA.x+1;j<=i;j++){
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:j Y:blockA.y inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:blockA.x+1 MoveablePointEnd:i StaticPoint:blockA.y IsXMoveable:YES Map:map Conversion:conversion]){
+            isMatched=NO;
         }
         //中间
-        for(int j=blockA.y-1;j>blockB.y;j--){
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:i Y:j inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:blockB.y+1 MoveablePointEnd:blockA.y-1 StaticPoint:i IsXMoveable:NO Map:map Conversion:conversion]){
+            isMatched=NO;
         }
         //下段
-        for(int j=i;j<blockB.x;j++){
-            MIPosition *position=[MIPositionConvert convertWithConversion:conversion X:j Y:blockB.y inverse:YES];
-            if([map blockAtX:position.x Y:position.y]!=0){
-                isMatched=NO;
-            }
+        if(![MIMatching isMatchingInLineWithMoveablePointStart:i MoveablePointEnd:blockB.x-1 StaticPoint:blockB.y IsXMoveable:YES Map:map Conversion:conversion]){
+            isMatched=NO;
         }
         if(isMatched==YES){
             NSMutableArray *routeVertexes=[NSMutableArray array];
@@ -267,6 +239,21 @@
         }
     }
     return [MIMatchingResult resultWithMatched:NO];
+}
+
++(BOOL)isMatchingInLineWithMoveablePointStart:(int)moveablePointStart MoveablePointEnd:(int)moveablePointEnd StaticPoint:(int)staticPoint IsXMoveable:(BOOL)isXMoveable Map:(MIMap*)map Conversion:(MIConversion *)conversion{
+    for(int i=moveablePointStart;i<=moveablePointEnd;i++){
+        MIPosition *position=nil;
+        if(isXMoveable){
+            position=[MIPositionConvert convertWithConversion:conversion X:i Y:staticPoint inverse:YES];
+        }else{
+            position=[MIPositionConvert convertWithConversion:conversion X:staticPoint Y:i inverse:YES];
+        }
+        if([map blockAtX:position.x Y:position.y]!=0){
+            return NO;
+        }
+    }
+    return YES;
 }
 
 @end
