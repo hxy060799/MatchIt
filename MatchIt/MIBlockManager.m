@@ -38,8 +38,6 @@ BOOL isPoping;
         
         isPoping=NO;
         
-        [self preloadParticleEffect];
-        
         blocks=[[NSMutableArray alloc]init];
         selectedBlocks=[[NSMutableArray alloc]init];
         selectedSprites=[[NSMutableArray alloc]init];
@@ -83,9 +81,8 @@ BOOL isPoping;
             aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
             [self addChild:aBlock.blockRouteSprite z:1];
-            
         }
-        
+        [self preloadParticleEffect];
     }
     return self;
 }
@@ -199,10 +196,13 @@ BOOL isPoping;
 }
 
 -(void)preloadParticleEffect{
-    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
-    for(int i=0;i<POP_PARTICLE_IMAGES_COUNT;i++){
+    //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
+    //for(int i=0;i<POP_PARTICLE_IMAGES_COUNT;i++){
         //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",i]];
-    }
+    //}
+    //system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
+    
+    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
 }
 
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
@@ -239,7 +239,9 @@ BOOL isPoping;
     [system setStartSizeVar:BLOCKS_SIZE*0.5];
     [system setEndSize:BLOCKS_SIZE*0.2];
     [system setEndSizeVar:BLOCKS_SIZE*0.2];
+    /*
     [self addChild:system z:100];
+    */
 }
 
 -(void)popEnded{
