@@ -21,12 +21,16 @@
 
 -(id)init{
     if(self=[super init]){
-        [self loadMapWithTemplateIndex:12];
-        
-        NSMutableArray *infArray=[[self readPlistWithPlistName:@"BlockInformation"]objectForKey:@"BlockInformation"];
-        self.blockInformation=infArray;
+
     }
     return self;
+}
+
+-(void)newMap{
+    [self loadMapWithTemplateIndex:12];
+    
+    NSMutableArray *infArray=[[self readPlistWithPlistName:@"BlockInformation"]objectForKey:@"BlockInformation"];
+    self.blockInformation=infArray;
 }
 
 -(void)dealloc{
@@ -60,6 +64,18 @@
     NSData *plistXML=[[NSFileManager defaultManager]contentsAtPath:filePath];
     dict=(NSMutableDictionary*)[NSPropertyListSerialization propertyListFromData:plistXML mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&error];
     return dict;
+}
+
+-(int)unPoppedBlocks{
+    int result=0;
+    for(int i=0;i<BLOCKS_YCOUNT;i++){
+        for(int j=0;j<BLOCKS_XCOUNT;j++){
+            if([self blockAtX:j Y:i]!=0){
+                result++;
+            }
+        }
+    }
+    return result;
 }
 
 -(void)loadMapWithTemplateIndex:(int)index{

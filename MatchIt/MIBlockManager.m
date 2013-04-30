@@ -50,6 +50,7 @@ BOOL isPoping;
         self.position=ccp(0,0);
         
         [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"BasicImage.plist"];
+        [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"stars.plist"];
         
         CCSprite *background=[CCSprite spriteWithSpriteFrameName:@"Background.png"];
         [background setPosition:ccp(0,0)];
@@ -62,29 +63,39 @@ BOOL isPoping;
             aBlock.delegate=self;
             
             [blocks addObject:aBlock];
-        }
-        
-        for(int i=0;i<[blocks count];i++){
-            MIBlock *aBlock=[blocks objectAtIndex:i];
-            
-            MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:i];
-            
-            [aBlock setBlockSpriteFrameWithFileName:[map imageNameAtX:blockPosition.x Y:blockPosition.y]];
-            //[aBlock setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",blockPosition.y]];
-            
-            aBlock.blockSprite.anchorPoint=ccp(0,0);
-            aBlock.blockSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
             
             [self addChild:aBlock.blockSprite z:0];
             
-            aBlock.blockRouteSprite.anchorPoint=ccp(0,0);
-            aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
-            
             [self addChild:aBlock.blockRouteSprite z:1];
         }
+        
         [self preloadParticleEffect];
+        
+        [self startGame];
     }
     return self;
+}
+
+-(void)startGame{
+    [map newMap];
+    
+    for(int i=0;i<[blocks count];i++){
+        MIBlock *aBlock=[blocks objectAtIndex:i];
+        
+        MIPosition *blockPosition=[MIPositionConvert indexToPositonWithIndex:i];
+        
+        [aBlock setBlockSpriteFrameWithFileName:[map imageNameAtX:blockPosition.x Y:blockPosition.y]];
+        //[aBlock setBlockSpriteFrameWithFileName:[NSString stringWithFormat:@"Block_%i.png",blockPosition.y]];
+        
+        aBlock.blockSprite.anchorPoint=ccp(0,0);
+        aBlock.blockSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+        
+        
+        aBlock.blockRouteSprite.anchorPoint=ccp(0,0);
+        aBlock.blockRouteSprite.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y);
+        
+    }
+
 }
 
 +(id)blockManager{
@@ -196,13 +207,12 @@ BOOL isPoping;
 }
 
 -(void)preloadParticleEffect{
-    //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
-    //for(int i=0;i<POP_PARTICLE_IMAGES_COUNT;i++){
-        //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",i]];
-    //}
-    //system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
+    for(int i=0;i<POP_PARTICLE_IMAGES_COUNT;i++){
+        [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:[NSString stringWithFormat:@"star_%i.png",i]];
+        //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"star_1.png"];
+    }
     
-    [CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
+    //[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
 }
 
 -(void)popBlockWithIndexA:(int)indexA IndexB:(int)indexB{
@@ -233,19 +243,28 @@ BOOL isPoping;
     CCParticleSystemQuad *system;
     //system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" CustomTextureFile:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
     
-    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:@"Block_1.png"];
+    system=[CCParticleSystemQuad particleWithFile:@"POPBlock.plist" DisplayFrameName:[NSString stringWithFormat:@"star_%i.png",arc4random()%POP_PARTICLE_IMAGES_COUNT]];
     system.position=ccp(BLOCKS_LEFT_X+BLOCKS_SIZE*blockPosition.x+BLOCKS_SIZE/2,BLOCKS_BOTTOM_Y+BLOCKS_SIZE*blockPosition.y+BLOCKS_SIZE/2);
     [system setStartSize:BLOCKS_SIZE*1.5];
     [system setStartSizeVar:BLOCKS_SIZE*0.5];
     [system setEndSize:BLOCKS_SIZE*0.2];
     [system setEndSizeVar:BLOCKS_SIZE*0.2];
-    /*
+    
     [self addChild:system z:100];
-    */
+    
 }
 
 -(void)popEnded{
     isPoping=NO;
+    if([map unPoppedBlocks]==0){
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"YouWin" message:@"Congratulate!\nYou win the game!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self startGame];
 }
 
 @end

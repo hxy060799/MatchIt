@@ -26,4 +26,8 @@
 
 -(void)setBlockAtX:(int)x Y:(int)y block:(int)block;
 
+-(int)unPoppedBlocks;
+
+-(void)newMap;
+
 @end

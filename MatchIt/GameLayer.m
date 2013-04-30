@@ -64,6 +64,8 @@ CCLabelTTF *welcomeLabel;
         CCLOG(@"明天继续,效果很明显,但是今天实在是太累了.");
         //2013.02.04
         CCLOG(@"做了一个半钟头,也总算把第三种情况完成了.");
+        //2013.04.30
+        CCLOG(@"好久没有做这个项目了...");
         
         CGSize winSize=[[CCDirector sharedDirector]winSize];
         NSLog(@"%f:%f",winSize.width,winSize.height);

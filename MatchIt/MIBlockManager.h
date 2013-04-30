@@ -16,7 +16,7 @@
 
 @protocol MIBlockManagerDelegate;
 
-@interface MIBlockManager : CCLayer <CCLayerTouchDelegate,MIBlockDelegate>{
+@interface MIBlockManager : CCLayer <CCLayerTouchDelegate,MIBlockDelegate,UIAlertViewDelegate>{
     NSMutableArray *blocks;
     
     NSMutableArray *selectedBlocks;
@@ -38,6 +38,7 @@
 
 -(id)init;
 +(id)blockManager;
+-(void)startGame;
 
 -(MIBlock*)blockAtIndex:(int)index;
 -(MIBlock*)blockAtX:(int)x Y:(int)y;
